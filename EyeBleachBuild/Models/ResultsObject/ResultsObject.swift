@@ -10,6 +10,6 @@ import Foundation
 
 //TODO:- results model for parsing use
 
-struct ResultsData {
+struct ResultsObject: Codable {
 	
 }

@@ -12,7 +12,7 @@ import UIKit
 
 class ResultsCollectionViewDataSource: NSObject {
 	
-	var resultsDataArray: [ResultsData]?
+	var resultsDataArray: [ResultsObject]?
 	
 }
 

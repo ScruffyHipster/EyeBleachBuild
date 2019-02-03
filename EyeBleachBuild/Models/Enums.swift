@@ -10,6 +10,13 @@ import Foundation
 import UIKit
 
 
+enum JSONrequestState {
+	case NotSearched
+	case Loading
+	case Error
+	case Success
+}
+
 enum CollectionViewCellIdentifier {
 	case ResultsCollectionViewCell
 	

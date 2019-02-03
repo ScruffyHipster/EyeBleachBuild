@@ -20,7 +20,7 @@ class ResultsCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 	
-	func configure(with data: ResultsData) {
+	func configure(with data: ResultsObject) {
 		
 	}
 

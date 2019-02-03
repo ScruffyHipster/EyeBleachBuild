@@ -10,6 +10,10 @@ import UIKit
 
 class HomeViewController: UIViewController {
 	
+	//Properties
+	
+	var request = HTTPRequest.shared
+	
 	//MARK:- Outlets
 	@IBOutlet weak var categoryLabel: UILabel! {
 		didSet {
@@ -33,10 +37,11 @@ class HomeViewController: UIViewController {
 
 	
 	//MARK:- Actions
+	
+	
 
 	@IBAction func categorySldierChanged(_ sender: UISlider) {
 		slider.value = roundf(slider.value)
-		
 		switch sender.value {
 		case 0.0:
 			categoryLabel.text = "Cats"
