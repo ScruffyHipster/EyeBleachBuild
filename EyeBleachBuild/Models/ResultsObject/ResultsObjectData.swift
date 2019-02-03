@@ -13,6 +13,10 @@ class ResultsObjectData {
 	
 	var objectDataArray: [ResultsObject]?
 	
+	func populateData(with data: [ResultsObject]) {
+		objectDataArray = data
+	}
+	
 	func returnObjects() -> [ResultsObject] {
 		guard let data = objectDataArray else {return []}
 		return data

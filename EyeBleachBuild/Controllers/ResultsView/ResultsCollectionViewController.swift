@@ -14,18 +14,23 @@ class ResultsCollectionViewController: UIViewController {
 	
 	lazy var collectionViewDataSource: ResultsCollectionViewDataSource = {
 		let data = ResultsCollectionViewDataSource()
+		data.resultsData = resultsData
 		return data
 	}()
+	var resultsData: ResultsObjectData?
 	
 	//MARK:- Outlets
 	
 	@IBOutlet weak var collectionView: UICollectionView!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		guard resultsData != nil else {
+			print("error on loading data")
+			return
+		}
 		setUpCollectionView()
-        // Do any additional setup after loading the view.
-    }
+	}
 	
 	//MARK:- Methods
 	
@@ -38,19 +43,19 @@ class ResultsCollectionViewController: UIViewController {
 	
 	func setUpCollectionViewCells() {
 		let nib = UINib(nibName: NibIdentifiers.ResultsCollectionViewCellNib.identifiers, bundle: nil)
-		collectionView.register(nib, forCellWithReuseIdentifier: NibIdentifiers.ResultsCollectionViewCellNib.identifiers)
+		collectionView.register(nib, forCellWithReuseIdentifier: CollectionViewCellIdentifier.ResultsCollectionViewCell.identifier)
 	}
 	
 	func setUpCollecitonViewFlow() {
 		//Set up instagram like colleciton view layout
 		let width = (self.view.frame.width - 40) / 3
 		let flow = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-		flow.collectionView?.contentSize = CGSize(width: width, height: width)
-		flow.collectionView?.contentInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-		flow.minimumLineSpacing = 10.0
-		flow.minimumInteritemSpacing = 10.0
+		flow.itemSize = CGSize(width: width, height: width)
+		flow.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		flow.minimumLineSpacing = 5.0
+		flow.minimumInteritemSpacing = 5.0
 	}
-
+	
 }
 
 extension ResultsCollectionViewController: UICollectionViewDelegate {

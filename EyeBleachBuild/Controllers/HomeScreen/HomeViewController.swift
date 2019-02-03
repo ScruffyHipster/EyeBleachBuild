@@ -13,7 +13,11 @@ class HomeViewController: UIViewController {
 	//Properties
 	
 	var request = HTTPRequest.shared
-	
+	var category: Int?
+	lazy var resultsData: ResultsObjectData = {
+		let data = ResultsObjectData()
+		return data
+	}()
 	//MARK:- Outlets
 	@IBOutlet weak var categoryLabel: UILabel! {
 		didSet {
@@ -37,7 +41,34 @@ class HomeViewController: UIViewController {
 
 	
 	//MARK:- Actions
-	
+	@IBAction func didTapShowMeButton(_ sender: Any) {
+		switch slider.value {
+		case 0.0:
+			category = 1
+		case 1.0:
+			category = 2
+		case 2.0:
+			category = 3
+		case 3.0:
+			category = 4
+		default:
+			break
+		}
+		
+		guard let category = category else {return}
+		let url = request.createUrl(category: category)
+		request.makeRequest(url: url, closure: { (success, data) in
+			if success == false {
+				createAlert(vc: self, title: "Error", message: "Sorry, an error occured. Cannot retrive data from server", style: .alert)
+			} else if success == true {
+				self.resultsData.populateData(with: data)
+				print(data)
+				DispatchQueue.main.async {
+					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
+				}
+			}
+		})
+	}
 	
 
 	@IBAction func categorySldierChanged(_ sender: UISlider) {
@@ -68,5 +99,20 @@ class HomeViewController: UIViewController {
 	}
 
 	
+}
+
+//MARK:- Navigation
+extension HomeViewController {
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		switch segue.identifier {
+		case SegueIdentifiers.ResultsCollectionViewController.identifier:
+			let vc = segue.destination as! ResultsCollectionViewController
+			vc.resultsData = resultsData
+			vc.navigationItem.title = categoryLabel.text
+		default:
+			break
+		}
+	}
 }
 

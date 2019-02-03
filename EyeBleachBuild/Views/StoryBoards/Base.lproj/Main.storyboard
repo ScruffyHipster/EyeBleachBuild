@@ -49,6 +49,9 @@
                                 <state key="normal" title="show me!">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapShowMeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oKy-wO-4z6"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Need some eye bleach?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDs-qY-8fY">
                                 <rect key="frame" x="93" y="152" width="189" height="21"/>
@@ -137,7 +140,7 @@
                         <outlet property="showButton" destination="LX4-6p-NHx" id="ZOy-V6-yns"/>
                         <outlet property="slider" destination="NJF-rm-QsK" id="sMs-hQ-hhX"/>
                         <outlet property="titleLabel" destination="QDs-qY-8fY" id="Mzz-td-SYp"/>
-                        <segue destination="jii-SV-vWv" kind="show" id="8nQ-DC-CR1"/>
+                        <segue destination="jii-SV-vWv" kind="show" identifier="ResultsCollectionViewController" id="8nQ-DC-CR1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

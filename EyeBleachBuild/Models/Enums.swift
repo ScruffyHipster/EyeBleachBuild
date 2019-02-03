@@ -19,11 +19,10 @@ enum JSONrequestState {
 
 enum CollectionViewCellIdentifier {
 	case ResultsCollectionViewCell
-	
 	var identifier: String {
 		switch self {
 		case .ResultsCollectionViewCell:
-			return "resultsCollectionViewCell"
+			return "ResultsCollectionViewCell"
 		}
 	}
 }
@@ -34,8 +33,19 @@ enum NibIdentifiers {
 	var identifiers: String {
 		switch self {
 		case .ResultsCollectionViewCellNib:
-			return "ResultsCollectionViewCellNib"
+			return "ResultsCollectionViewCell"
 
+		}
+	}
+}
+
+enum SegueIdentifiers {
+	case ResultsCollectionViewController
+	
+	var identifier: String {
+		switch self {
+		case .ResultsCollectionViewController:
+			return "ResultsCollectionViewController"
 		}
 	}
 }

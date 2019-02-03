@@ -8,8 +8,16 @@
 
 import Foundation
 
-//TODO:- results model for parsing use
+//Type alias is used to help parse dictionary JSON
+typealias ResultsObjectDict = [ResultsObject]
 
 struct ResultsObject: Codable {
-	
+	let categories: [Category]
+	let id: String
+	let url: String
+}
+
+struct Category: Codable {
+	let id: Int
+	let name: String
 }

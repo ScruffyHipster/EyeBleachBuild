@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A664058220756A100666AA2 /* ImageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A664057220756A100666AA2 /* ImageDownload.swift */; };
 		4AC619182206F907002856B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC619172206F907002856B6 /* AppDelegate.swift */; };
 		4AC6191A2206F907002856B6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC619192206F907002856B6 /* HomeViewController.swift */; };
 		4AC6191D2206F907002856B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC6191B2206F907002856B6 /* Main.storyboard */; };
@@ -14,16 +15,18 @@
 		4AC619222206F908002856B6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AC619212206F908002856B6 /* Assets.xcassets */; };
 		4AC619252206F908002856B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AC619232206F908002856B6 /* LaunchScreen.storyboard */; };
 		4AC6193322070426002856B6 /* ResultsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6193122070426002856B6 /* ResultsCollectionViewCell.swift */; };
-		4AC6193422070426002856B6 /* ResultsCollectionViewCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC6193222070426002856B6 /* ResultsCollectionViewCollectionViewCell.xib */; };
+		4AC6193422070426002856B6 /* ResultsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC6193222070426002856B6 /* ResultsCollectionViewCell.xib */; };
 		4AC6193722070448002856B6 /* ResultsCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6193622070448002856B6 /* ResultsCollectionViewDataSource.swift */; };
 		4AC6193922070490002856B6 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6193822070490002856B6 /* Enums.swift */; };
 		4AC6193D22070555002856B6 /* ResultsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6193C22070555002856B6 /* ResultsObject.swift */; };
 		4AC6193F220706A6002856B6 /* ResultsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6193E220706A6002856B6 /* ResultsCollectionViewController.swift */; };
 		4AC6194222070A0A002856B6 /* ResultsObjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194122070A0A002856B6 /* ResultsObjectData.swift */; };
 		4AC6194522070C7D002856B6 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194422070C7D002856B6 /* HttpRequest.swift */; };
+		4AC6194822071914002856B6 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194722071914002856B6 /* Alerts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A664057220756A100666AA2 /* ImageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownload.swift; sourceTree = "<group>"; };
 		4AC619142206F907002856B6 /* EyeBleachBuild.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeBleachBuild.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AC619172206F907002856B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4AC619192206F907002856B6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -33,13 +36,14 @@
 		4AC619242206F908002856B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4AC619262206F908002856B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AC6193122070426002856B6 /* ResultsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ResultsCollectionViewCell.swift; path = EyeBleachBuild/Views/CollectionViewCell/ResultsCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
-		4AC6193222070426002856B6 /* ResultsCollectionViewCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ResultsCollectionViewCollectionViewCell.xib; path = EyeBleachBuild/Views/CollectionViewCell/Nibs/ResultsCollectionViewCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
+		4AC6193222070426002856B6 /* ResultsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ResultsCollectionViewCell.xib; path = EyeBleachBuild/Views/CollectionViewCell/Nibs/ResultsCollectionViewCell.xib; sourceTree = SOURCE_ROOT; };
 		4AC6193622070448002856B6 /* ResultsCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		4AC6193822070490002856B6 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		4AC6193C22070555002856B6 /* ResultsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsObject.swift; sourceTree = "<group>"; };
 		4AC6193E220706A6002856B6 /* ResultsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCollectionViewController.swift; sourceTree = "<group>"; };
 		4AC6194122070A0A002856B6 /* ResultsObjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsObjectData.swift; sourceTree = "<group>"; };
 		4AC6194422070C7D002856B6 /* HttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
+		4AC6194722071914002856B6 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,7 @@
 		4AC619162206F907002856B6 /* EyeBleachBuild */ = {
 			isa = PBXGroup;
 			children = (
+				4AC619492207191F002856B6 /* Helpers */,
 				4AC6192E2206F92C002856B6 /* Views */,
 				4AC6192D2206F926002856B6 /* Models */,
 				4AC6192C2206F91F002856B6 /* Controllers */,
@@ -149,7 +154,7 @@
 		4AC6193B22070516002856B6 /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
-				4AC6193222070426002856B6 /* ResultsCollectionViewCollectionViewCell.xib */,
+				4AC6193222070426002856B6 /* ResultsCollectionViewCell.xib */,
 			);
 			path = Nibs;
 			sourceTree = "<group>";
@@ -177,6 +182,23 @@
 				4AC6194422070C7D002856B6 /* HttpRequest.swift */,
 			);
 			path = HttpGroup;
+			sourceTree = "<group>";
+		};
+		4AC619492207191F002856B6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4A664057220756A100666AA2 /* ImageDownload.swift */,
+				4AC6194A22071927002856B6 /* Alerts */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4AC6194A22071927002856B6 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				4AC6194722071914002856B6 /* Alerts.swift */,
+			);
+			path = Alerts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,7 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AC6193422070426002856B6 /* ResultsCollectionViewCollectionViewCell.xib in Resources */,
+				4AC6193422070426002856B6 /* ResultsCollectionViewCell.xib in Resources */,
 				4AC619252206F908002856B6 /* LaunchScreen.storyboard in Resources */,
 				4AC619222206F908002856B6 /* Assets.xcassets in Resources */,
 				4AC6191D2206F907002856B6 /* Main.storyboard in Resources */,
@@ -260,6 +282,8 @@
 				4AC6193F220706A6002856B6 /* ResultsCollectionViewController.swift in Sources */,
 				4AC619182206F907002856B6 /* AppDelegate.swift in Sources */,
 				4AC6194222070A0A002856B6 /* ResultsObjectData.swift in Sources */,
+				4A664058220756A100666AA2 /* ImageDownload.swift in Sources */,
+				4AC6194822071914002856B6 /* Alerts.swift in Sources */,
 				4AC6193D22070555002856B6 /* ResultsObject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

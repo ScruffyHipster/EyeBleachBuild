@@ -36,15 +36,17 @@ class HTTPRequest {
 	
 	func makeRequest(url request: URLRequest, closure: @escaping (Bool, ([ResultsObject])) -> (Void)) {
 		var success = false
+		print("Request made is as follows \(request)")
 		URLSession.shared.dataTask(with: request) { (data, response, error) in
 			guard let response = response as? HTTPURLResponse else {return}
 			if response.statusCode == 200 {
 				guard let data = data else {return}
 				do {
-					let jsonData = try self.decoder.decode(ResultsObject.self, from: data)
+					let jsonData = try self.decoder.decode(ResultsObjectDict.self, from: data)
 					success = true
+					print("THe json comes in like \(jsonData)")
 					self.state = .Success
-					closure(success, [jsonData])
+					closure(success, jsonData)
 				} catch {
 					success = false
 					self.state = .Error
@@ -55,7 +57,8 @@ class HTTPRequest {
 				guard let error = error as NSError? else {return}
 				print(error.localizedDescription)
 				self.state = .Error
-				//TODO:- add alert to show user that the request failed and why
+				success = false
+				closure(success, [])
 			}
 		} .resume()
 	}

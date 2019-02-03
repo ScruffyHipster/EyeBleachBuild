@@ -12,19 +12,24 @@ import UIKit
 
 class ResultsCollectionViewDataSource: NSObject {
 	
-	var resultsDataArray: [ResultsObject]?
-	
+	var resultsDataArray: [ResultsObject]? {
+		return resultsData?.returnObjects()
+	}
+	var resultsData: ResultsObjectData?
 }
 
 
 extension ResultsCollectionViewDataSource: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		guard let data = resultsDataArray?.count else {return 1}
-		return data
+		guard let data = resultsDataArray else {return 0}
+		print(data.count)
+		return data.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCellIdentifier.ResultsCollectionViewCell.identifier, for: indexPath) as! ResultsCollectionViewCell
+		guard let data = resultsDataArray else {return cell}
+		cell.configure(with: data[indexPath.row])
 		return cell
 	}
 	

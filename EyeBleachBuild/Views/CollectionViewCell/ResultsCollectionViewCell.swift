@@ -14,14 +14,17 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 	
 	@IBOutlet weak var backgroundImage: UIImageView!
 	
+	var downloadTask: URLSessionDownloadTask?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+		self.layer.cornerRadius = 8
     }
 	
 	func configure(with data: ResultsObject) {
-		
+		let urlString = URL(string: data.url)
+		guard let url = urlString else {return}
+		downloadTask = backgroundImage.loadImageFrom(url: url)
 	}
 
 }
