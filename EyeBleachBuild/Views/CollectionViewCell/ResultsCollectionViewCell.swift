@@ -10,21 +10,30 @@ import UIKit
 
 class ResultsCollectionViewCell: UICollectionViewCell {
 	
+	//MARK:- Properties
+	
 	//MARK:- Outlets
 	
 	@IBOutlet weak var backgroundImage: UIImageView!
+	@IBOutlet weak var backGroundView: UIView!
+	
 	
 	var downloadTask: URLSessionDownloadTask?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-		self.layer.cornerRadius = 8
+		backGroundView.layer.cornerRadius = 6
+		backGroundView.clipsToBounds = true
+		self.addShadow(radius: 8, offSet: CGSize(width: 3, height: 3), color: UIColor.black.cgColor, opacity: 0.8)
     }
 	
 	func configure(with data: ResultsObject) {
-		let urlString = URL(string: data.url)
-		guard let url = urlString else {return}
-		downloadTask = backgroundImage.loadImageFrom(url: url)
+		backgroundImage.loadImageFrom(urlString: data.url)
+	}
+	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		backgroundImage.image = nil
 	}
 
 }

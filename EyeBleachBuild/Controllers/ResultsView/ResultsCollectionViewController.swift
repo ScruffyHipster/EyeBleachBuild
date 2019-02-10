@@ -56,6 +56,11 @@ class ResultsCollectionViewController: UIViewController {
 		flow.minimumInteritemSpacing = 5.0
 	}
 	
+	deinit {
+		imageCache.removeAllObjects()
+		print("here")
+	}
+	
 }
 
 extension ResultsCollectionViewController: UICollectionViewDelegate {

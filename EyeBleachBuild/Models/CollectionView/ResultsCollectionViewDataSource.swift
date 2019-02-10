@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 class ResultsCollectionViewDataSource: NSObject {
 	
 	var resultsDataArray: [ResultsObject]? {

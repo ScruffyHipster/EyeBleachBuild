@@ -27,7 +27,7 @@ class HTTPRequest {
 	//MARK:- Methods
 	
 	func createUrl(category: Int) -> URLRequest {
-		let url = URL(string: "https://api.thecatapi.com/v1/images/search?category_ids=\(category)&limit=9")
+		let url = URL(string: "https://api.thecatapi.com/v1/images/search?category_ids=\(category)&limit=30")
 		var request = URLRequest(url: url!)
 		request.httpMethod = "GET"
 		request.allHTTPHeaderFields = headers
@@ -53,7 +53,7 @@ class HTTPRequest {
 					print(error.localizedDescription)
 					closure(success, [])
 				}
-			} else if response.statusCode == 400 {
+			} else if response.statusCode == 1009 {
 				guard let error = error as NSError? else {return}
 				print(error.localizedDescription)
 				self.state = .Error

@@ -19,6 +19,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y7L-0a-654">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qac-fZ-21M">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                     </imageView>
@@ -26,12 +30,17 @@
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="qac-fZ-21M" secondAttribute="bottom" id="1qo-Hl-5NF"/>
+                <constraint firstItem="Y7L-0a-654" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7vn-rm-9bq"/>
                 <constraint firstItem="qac-fZ-21M" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="9oq-pr-Ly1"/>
                 <constraint firstAttribute="trailing" secondItem="qac-fZ-21M" secondAttribute="trailing" id="DXW-Q7-Dsd"/>
+                <constraint firstAttribute="bottom" secondItem="Y7L-0a-654" secondAttribute="bottom" id="Tcx-NM-3W6"/>
                 <constraint firstItem="qac-fZ-21M" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eai-bP-4Mj"/>
+                <constraint firstItem="Y7L-0a-654" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oBu-um-cxV"/>
+                <constraint firstAttribute="trailing" secondItem="Y7L-0a-654" secondAttribute="trailing" id="qqm-Ln-qXg"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
+                <outlet property="backGroundView" destination="Y7L-0a-654" id="XCs-3m-dwd"/>
                 <outlet property="backgroundImage" destination="qac-fZ-21M" id="Tdk-vH-xXs"/>
             </connections>
         </collectionViewCell>
