@@ -23,6 +23,8 @@ class ResultsCollectionViewController: UIViewController {
 	
 	@IBOutlet weak var collectionView: UICollectionView!
 	
+	//MARK:- Methods
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		guard resultsData != nil else {
@@ -31,8 +33,6 @@ class ResultsCollectionViewController: UIViewController {
 		}
 		setUpCollectionView()
 	}
-	
-	//MARK:- Methods
 	
 	func setUpCollectionView() {
 		collectionView.dataSource = collectionViewDataSource
@@ -56,15 +56,28 @@ class ResultsCollectionViewController: UIViewController {
 		flow.minimumInteritemSpacing = 5.0
 	}
 	
+	//MARK:- Navigation
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == SegueIdentifiers.ResultViewerViewController.identifier {
+			guard let data = collectionViewDataSource.resultsData?.objectDataArray else {return}
+			let vc = segue.destination as! SelectedResultViewController
+			let indexPath = sender as! IndexPath
+			let result = data[indexPath.row]
+			vc.result = result
+		}
+	}
+	
+	//MARL:- Deinit
 	deinit {
+		//General housekeeping
 		imageCache.removeAllObjects()
-		print("here")
 	}
 	
 }
 
 extension ResultsCollectionViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
 		//TODO:- Model card pop up from bottom. Best to have it pop out of frame into view rather than having a card view from the outset
 	}
 }

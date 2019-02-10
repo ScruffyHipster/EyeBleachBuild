@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A1EA59F221089BC0050F199 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1EA59E221089BC0050F199 /* Cache.swift */; };
+		4A1EA5A12210933E0050F199 /* SelectedResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1EA5A02210933E0050F199 /* SelectedResultViewController.swift */; };
 		4A4BEAB0220A04020092077E /* AddShadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEAAF220A04020092077E /* AddShadows.swift */; };
 		4A664058220756A100666AA2 /* ImageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A664057220756A100666AA2 /* ImageDownload.swift */; };
 		4AC619182206F907002856B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC619172206F907002856B6 /* AppDelegate.swift */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		4A1EA59E221089BC0050F199 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
+		4A1EA5A02210933E0050F199 /* SelectedResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedResultViewController.swift; sourceTree = "<group>"; };
 		4A4BEAAF220A04020092077E /* AddShadows.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddShadows.swift; sourceTree = "<group>"; };
 		4A664057220756A100666AA2 /* ImageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownload.swift; sourceTree = "<group>"; };
 		4AC619142206F907002856B6 /* EyeBleachBuild.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeBleachBuild.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				4AC6193E220706A6002856B6 /* ResultsCollectionViewController.swift */,
+				4A1EA5A02210933E0050F199 /* SelectedResultViewController.swift */,
 			);
 			path = ResultsView;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				4AC6193F220706A6002856B6 /* ResultsCollectionViewController.swift in Sources */,
 				4AC619182206F907002856B6 /* AppDelegate.swift in Sources */,
 				4AC6194222070A0A002856B6 /* ResultsObjectData.swift in Sources */,
+				4A1EA5A12210933E0050F199 /* SelectedResultViewController.swift in Sources */,
 				4A664058220756A100666AA2 /* ImageDownload.swift in Sources */,
 				4A4BEAB0220A04020092077E /* AddShadows.swift in Sources */,
 				4AC6194822071914002856B6 /* Alerts.swift in Sources */,

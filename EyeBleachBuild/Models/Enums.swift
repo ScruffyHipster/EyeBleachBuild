@@ -29,7 +29,6 @@ enum CollectionViewCellIdentifier {
 
 enum NibIdentifiers {
 	case ResultsCollectionViewCellNib
-	
 	var identifiers: String {
 		switch self {
 		case .ResultsCollectionViewCellNib:
@@ -41,11 +40,13 @@ enum NibIdentifiers {
 
 enum SegueIdentifiers {
 	case ResultsCollectionViewController
-	
+	case ResultViewerViewController
 	var identifier: String {
 		switch self {
 		case .ResultsCollectionViewController:
 			return "ResultsCollectionViewController"
+		case .ResultViewerViewController:
+			return "ResultViewerViewController"
 		}
 	}
 }

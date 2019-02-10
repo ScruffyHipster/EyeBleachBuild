@@ -9,14 +9,10 @@
 import Foundation
 import UIKit
 
-var counter = 0
-
 extension UIImageView {
-	
 	//This extention is used to download an image from the url passed in asyncronously
 	func loadImageFrom(urlString: String) {
 		guard let url = URL(string: urlString) else {return}
-		
 		guard let imageFromCache = imageCache.object(forKey: urlString as NSString) else {
 			URLSession.shared.downloadTask(with: url) {
 				[weak self] url, response, error in
@@ -31,7 +27,6 @@ extension UIImageView {
 				}.resume()
 			return
 		}
-		print("here")
 		self.image = imageFromCache
 		return
 	}

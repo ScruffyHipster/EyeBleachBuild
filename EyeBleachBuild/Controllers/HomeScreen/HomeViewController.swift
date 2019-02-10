@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
 	//MARK:- Outlets
 	@IBOutlet weak var categoryLabel: UILabel! {
 		didSet {
-			categoryLabel.text = ""
+			categoryLabel.text = "Space"
 		}
 	}
 	@IBOutlet weak var showButton: UIButton! {
@@ -75,11 +75,11 @@ class HomeViewController: UIViewController {
 		slider.value = roundf(slider.value)
 		switch sender.value {
 		case 0.0:
-			categoryLabel.text = "Cats"
-		case 1.0:
-			categoryLabel.text = "Sunglasses"
-		case 2.0:
 			categoryLabel.text = "Hats"
+		case 1.0:
+			categoryLabel.text = "Space"
+		case 2.0:
+			categoryLabel.text = "Funny"
 		case 3.0:
 			categoryLabel.text = "Suprise!"
 		default:
