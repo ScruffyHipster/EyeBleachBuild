@@ -34,7 +34,7 @@ class HTTPRequest {
 		return request
 	}
 	
-	func makeRequest(url request: URLRequest, closure: @escaping (Bool, ([ResultsObject])) -> (Void)) {
+	func makeRequest<T: Codable>(url request: URLRequest, for dataStructure: T.Type, closure: @escaping (Bool, ([AnyObject])) -> (Void)) {
 		var success = false
 		print("Request made is as follows \(request)")
 		URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -42,11 +42,11 @@ class HTTPRequest {
 			if response.statusCode == 200 {
 				guard let data = data else {return}
 				do {
-					let jsonData = try self.decoder.decode(ResultsObjectDict.self, from: data)
+					let jsonData = try self.decoder.decode(dataStructure.self, from: data)
 					success = true
-					print("THe json comes in like \(jsonData)")
+					print("The json comes in like \(jsonData)")
 					self.state = .Success
-					closure(success, jsonData)
+					closure(success, jsonData as! ([AnyObject]))
 				} catch {
 					success = false
 					self.state = .Error

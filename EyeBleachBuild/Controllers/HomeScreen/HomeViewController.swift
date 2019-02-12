@@ -58,7 +58,7 @@ class HomeViewController: UIViewController {
 		
 		guard let category = category else {return}
 		let url = request.createUrl(category: category)
-		request.makeRequest(url: url, closure: { (success, data) in
+		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
 			if success == false {
 				createAlert(vc: self, title: "Error", message: "Sorry, an error occured. Cannot retrive data from server", style: .alert)
 			} else if success == true {
