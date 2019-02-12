@@ -11,15 +11,15 @@ import UIKit
 
 class ResultsObjectData {
 	
-	var objectDataArray: [ResultsObject]?
+	var objectDataArray: [AnyObject]?
 	
-	func populateData(with data: [ResultsObject]) {
-		objectDataArray = data
+	func populateData<T>(with data: [T]) {
+		objectDataArray = data as [AnyObject]
 	}
 	
-	func returnObjects() -> [ResultsObject] {
+	func returnObjects<T>() -> [T] {
 		guard let data = objectDataArray else {return []}
-		return data
+		return data as! [T]
 	}
 	
 }

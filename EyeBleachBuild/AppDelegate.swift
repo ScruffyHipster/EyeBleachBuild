@@ -13,10 +13,16 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
-
+	lazy var managedObjectContext: NSManagedObjectContext = {
+		return persistentContainer.viewContext
+	}()
+	
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
+		let nav = window?.rootViewController as? UINavigationController
+		let vc = nav?.viewControllers[0] as! HomeViewController
+		vc.managedObjectContext = managedObjectContext
 		return true
 	}
 

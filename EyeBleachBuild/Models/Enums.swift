@@ -41,12 +41,15 @@ enum NibIdentifiers {
 enum SegueIdentifiers {
 	case ResultsCollectionViewController
 	case ResultViewerViewController
+	case SavedResultsViewController
 	var identifier: String {
 		switch self {
 		case .ResultsCollectionViewController:
 			return "ResultsCollectionViewController"
 		case .ResultViewerViewController:
 			return "ResultViewerViewController"
+		case .SavedResultsViewController:
+			return "SavedResultsViewController"
 		}
 	}
 }

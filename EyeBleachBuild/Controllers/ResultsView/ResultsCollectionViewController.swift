@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ResultsCollectionViewController: UIViewController {
 	
@@ -18,6 +19,7 @@ class ResultsCollectionViewController: UIViewController {
 		return data
 	}()
 	var resultsData: ResultsObjectData?
+	var managedObjectContext: NSManagedObjectContext?
 	
 	//MARK:- Outlets
 	
@@ -63,11 +65,12 @@ class ResultsCollectionViewController: UIViewController {
 			let vc = segue.destination as! SelectedResultViewController
 			let indexPath = sender as! IndexPath
 			let result = data[indexPath.row]
-			vc.result = result
+			vc.result = result as? ResultsObject
+			vc.delegate = self
 		}
 	}
 	
-	//MARL:- Deinit
+	//MARK:- Deinit
 	deinit {
 		//General housekeeping
 		imageCache.removeAllObjects()
@@ -79,5 +82,21 @@ extension ResultsCollectionViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
 		//TODO:- Model card pop up from bottom. Best to have it pop out of frame into view rather than having a card view from the outset
+	}
+}
+
+extension ResultsCollectionViewController: SelectedResultsViewControllerDelegate {
+	func didTapSaveButton(item: String, sender: SelectedResultViewController) {
+		//TODO:- add in save function here to coredata
+		guard let managedObjectContext = managedObjectContext else {return}
+		let saveResult = SavedResult(context: managedObjectContext)
+		saveResult.url = item
+		do {
+			try managedObjectContext.save()
+			UserDefaults.standard.set(true, forKey: "savedImage")
+		} catch {
+			print("Error occured when trying to save \(error.localizedDescription)")
+		}
+		dismiss(animated: true, completion: nil)
 	}
 }

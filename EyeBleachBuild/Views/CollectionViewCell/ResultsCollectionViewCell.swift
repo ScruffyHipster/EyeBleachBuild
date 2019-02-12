@@ -31,6 +31,17 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 		backgroundImage.loadImageFrom(urlString: data.url)
 	}
 	
+	func configureGeneric<T>(with data: T?) {
+		if let resultData = data as? ResultsObject {
+			backgroundImage.loadImageFrom(urlString: resultData.url)
+		} else if let savedData = data as? SavedResult {
+			guard let url = savedData.url else {print("failed")
+				return
+			}
+			backgroundImage.loadImageFrom(urlString: url)
+		}
+	}
+	
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		backgroundImage.image = nil

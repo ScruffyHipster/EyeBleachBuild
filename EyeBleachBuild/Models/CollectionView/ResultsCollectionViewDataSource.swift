@@ -11,8 +11,10 @@ import UIKit
 
 class ResultsCollectionViewDataSource: NSObject {
 	
-	var resultsDataArray: [ResultsObject]? {
-		return resultsData?.returnObjects()
+	var resultsDataArray: [AnyObject]? {
+		get {
+			return resultsData?.returnObjects()
+		}
 	}
 	var resultsData: ResultsObjectData?
 }
@@ -28,7 +30,7 @@ extension ResultsCollectionViewDataSource: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCellIdentifier.ResultsCollectionViewCell.identifier, for: indexPath) as! ResultsCollectionViewCell
 		guard let data = resultsDataArray else {return cell}
-		cell.configure(with: data[indexPath.row])
+		cell.configureGeneric(with: data[indexPath.row])
 		return cell
 	}
 	

@@ -7,18 +7,20 @@
 //
 
 import UIKit
+import CoreData
 
 class HomeViewController: UIViewController {
 	
-	//Properties
-	
+//MARK:- Properties
 	var request = HTTPRequest.shared
 	var category: Int?
+	var managedObjectContext: NSManagedObjectContext?
 	lazy var resultsData: ResultsObjectData = {
 		let data = ResultsObjectData()
 		return data
 	}()
-	//MARK:- Outlets
+	
+//MARK:- Outlets
 	@IBOutlet weak var categoryLabel: UILabel! {
 		didSet {
 			categoryLabel.text = "Space"
@@ -26,21 +28,20 @@ class HomeViewController: UIViewController {
 	}
 	@IBOutlet weak var showButton: UIButton! {
 		didSet {
-			showButton.layer.cornerRadius = 8
+			showButton.roundedTransparentButton()
 		}
 	}
 	@IBOutlet weak var savedButton: UIButton! {
 		didSet {
-			savedButton.isHidden = true
-			savedButton.layer.cornerRadius = 8
+			savedButton.roundedTransparentButton()
 		}
 	}
 	@IBOutlet weak var slider: UISlider!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var instructionLabel: UILabel!
-
 	
-	//MARK:- Actions
+	
+//MARK:- Actions
 	@IBAction func didTapShowMeButton(_ sender: Any) {
 		switch slider.value {
 		case 0.0:
@@ -69,8 +70,28 @@ class HomeViewController: UIViewController {
 			}
 		})
 	}
+	@IBAction func didTapSavedButton(_ sender: Any) {
+		checkForSavedImages()
+		performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewController.identifier, sender: nil)
+	}
 	
-
+	func checkForSavedImages() {
+		let resultsSaved = UserDefaults.standard.object(forKey: "savedImage") as! Bool
+		if resultsSaved == true {
+			let fetchedRequest = NSFetchRequest<SavedResult>()
+			let entity = SavedResult.entity()
+			fetchedRequest.entity = entity
+			do {
+				let savedData = try managedObjectContext?.fetch(fetchedRequest)
+				guard let data = savedData else {return}
+				self.resultsData.populateData(with: data)
+			} catch {
+				print(error.localizedDescription)
+			}
+		}
+	}
+	
+	
 	@IBAction func categorySldierChanged(_ sender: UISlider) {
 		slider.value = roundf(slider.value)
 		switch sender.value {
@@ -87,17 +108,18 @@ class HomeViewController: UIViewController {
 		}
 	}
 	
-	
+//MARK:- Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setUpView()
 	}
-
+	
+	
 	func setUpView() {
 		slider.value = 1
 		navigationController?.navigationBar.prefersLargeTitles = true
 	}
-
+	
 	
 }
 
@@ -110,6 +132,12 @@ extension HomeViewController {
 			let vc = segue.destination as! ResultsCollectionViewController
 			vc.resultsData = resultsData
 			vc.navigationItem.title = categoryLabel.text
+			vc.managedObjectContext = managedObjectContext
+		case SegueIdentifiers.SavedResultsViewController.identifier:
+			let vc = segue.destination as! ResultsCollectionViewController
+			vc.resultsData = resultsData
+			vc.navigationItem.title = "Saved Doses"
+			vc.managedObjectContext = managedObjectContext
 		default:
 			break
 		}
