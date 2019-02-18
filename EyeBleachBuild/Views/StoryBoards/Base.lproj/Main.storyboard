@@ -195,6 +195,7 @@
                     <connections>
                         <outlet property="collectionView" destination="B4G-OD-gVF" id="G8H-49-VeN"/>
                         <segue destination="A9P-Yx-Wwo" kind="presentation" identifier="ResultViewerViewController" id="A9y-8v-zWE"/>
+                        <segue destination="A9P-Yx-Wwo" kind="modal" identifier="SavedResultsViewerViewController" id="bhi-Wb-PaQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7rp-Ix-faV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -279,6 +280,7 @@
         <image name="catWallPaper" width="187.5" height="335.5"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="bhi-Wb-PaQ"/>
         <segue reference="sdk-JZ-2Jn"/>
     </inferredMetricsTieBreakers>
 </document>

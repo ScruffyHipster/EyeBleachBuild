@@ -19,6 +19,7 @@ class ResultsCollectionViewController: UIViewController {
 		return data
 	}()
 	var resultsData: ResultsObjectData?
+	var showingSaved: Bool = false
 	var managedObjectContext: NSManagedObjectContext?
 	
 	//MARK:- Outlets
@@ -60,13 +61,25 @@ class ResultsCollectionViewController: UIViewController {
 	
 	//MARK:- Navigation
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == SegueIdentifiers.ResultViewerViewController.identifier {
-			guard let data = collectionViewDataSource.resultsData?.objectDataArray else {return}
+		switch segue.identifier {
+		case SegueIdentifiers.ResultViewerViewController.identifier:
+			guard let data = self.collectionViewDataSource.resultsData?.objectDataArray else {return}
 			let vc = segue.destination as! SelectedResultViewController
 			let indexPath = sender as! IndexPath
 			let result = data[indexPath.row]
 			vc.result = result as? ResultsObject
 			vc.delegate = self
+		case SegueIdentifiers.SavedResultsViewerViewController.identifier:
+			print("showing saved cats")
+			guard let data = self.collectionViewDataSource.resultsData?.objectDataArray else {return}
+			let vc = segue.destination as! SelectedResultViewController
+			let indexPath = sender as! IndexPath
+			let result = data[indexPath.row]
+			vc.showSaved = true
+			vc.savedResult = result as? SavedResult
+			vc.delegate = self
+		default:
+			break
 		}
 	}
 	
@@ -80,7 +93,8 @@ class ResultsCollectionViewController: UIViewController {
 
 extension ResultsCollectionViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
+		showingSaved ? performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewerViewController.identifier, sender: indexPath) : performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
+		
 		//TODO:- Model card pop up from bottom. Best to have it pop out of frame into view rather than having a card view from the outset
 	}
 }

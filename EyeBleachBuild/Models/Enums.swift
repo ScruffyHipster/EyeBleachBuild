@@ -42,6 +42,7 @@ enum SegueIdentifiers {
 	case ResultsCollectionViewController
 	case ResultViewerViewController
 	case SavedResultsViewController
+	case SavedResultsViewerViewController
 	var identifier: String {
 		switch self {
 		case .ResultsCollectionViewController:
@@ -50,6 +51,8 @@ enum SegueIdentifiers {
 			return "ResultViewerViewController"
 		case .SavedResultsViewController:
 			return "SavedResultsViewController"
+		case .SavedResultsViewerViewController:
+			return "SavedResultsViewerViewController"
 		}
 	}
 }

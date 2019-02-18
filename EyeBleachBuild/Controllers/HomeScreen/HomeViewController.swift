@@ -136,6 +136,7 @@ extension HomeViewController {
 		case SegueIdentifiers.SavedResultsViewController.identifier:
 			let vc = segue.destination as! ResultsCollectionViewController
 			vc.resultsData = resultsData
+			vc.showingSaved = true
 			vc.navigationItem.title = "Saved Doses"
 			vc.managedObjectContext = managedObjectContext
 		default:

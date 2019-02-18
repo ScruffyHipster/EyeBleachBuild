@@ -17,6 +17,8 @@ class SelectedResultViewController: UIViewController {
 	
 	//MARK:- Properties
 	var result: ResultsObject?
+	var savedResult: SavedResult?
+	var showSaved: Bool = false
 	weak var delegate: SelectedResultsViewControllerDelegate?
 	var shouldBeSaved: Bool = false
 	//MARK:- Outlets
@@ -46,12 +48,18 @@ class SelectedResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUp()
-        // Do any additional setup after loading the view.
     }
 	
 	func setUp() {
-		guard let data = result else {return}
-		imageView.loadImageFrom(urlString: data.url)
+		if showSaved {
+			print("showing saved")
+			guard let data = savedResult else {return}
+			guard let url = data.url else {return}
+			imageView.loadImageFrom(urlString: url)
+		} else {
+			guard let data = result else {return}
+			imageView.loadImageFrom(urlString: data.url)
+		}
 	}
 	
 	func save() {
