@@ -19,6 +19,12 @@ class HomeViewController: UIViewController {
 		let data = ResultsObjectData()
 		return data
 	}()
+	lazy var blurView: UIVisualEffectView = {
+		var blur = UIBlurEffect(style: .light)
+		var blurView = UIVisualEffectView(effect: blur)
+		blurView.frame = view.frame
+		return blurView
+	}()
 	
 //MARK:- Outlets
 	@IBOutlet weak var categoryLabel: UILabel! {
@@ -55,7 +61,9 @@ class HomeViewController: UIViewController {
 		default:
 			break
 		}
-		
+		self.view.addSubview(blurView)
+		let hudView = HUDView.hudView(in: self.view, animated: true)
+		hudView.boxText = "Making request.."
 		guard let category = category else {return}
 		let url = request.createUrl(category: category)
 		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
@@ -66,6 +74,8 @@ class HomeViewController: UIViewController {
 				print(data)
 				DispatchQueue.main.async {
 					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
+					hudView.remove(animated: true)
+					self.blurView.removeFromSuperview()
 				}
 			}
 		})
