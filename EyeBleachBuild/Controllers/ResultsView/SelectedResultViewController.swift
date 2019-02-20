@@ -21,6 +21,13 @@ class SelectedResultViewController: UIViewController {
 	var showSaved: Bool = false
 	weak var delegate: SelectedResultsViewControllerDelegate?
 	var shouldBeSaved: Bool = false
+	lazy var activityIndicator: UIActivityIndicatorView = {
+		var av = UIActivityIndicatorView()
+		av.style = .gray
+		av.startAnimating()
+		return av
+	}()
+	
 	//MARK:- Outlets
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var saveButton: UIButton! {
@@ -47,6 +54,7 @@ class SelectedResultViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		self.view.addSubview(activityIndicator)
 		setUp()
     }
 	
@@ -55,10 +63,24 @@ class SelectedResultViewController: UIViewController {
 			print("showing saved")
 			guard let data = savedResult else {return}
 			guard let url = data.url else {return}
-			imageView.loadImageFrom(urlString: url)
+			imageView.loadImageFrom(urlString: url, closure: { (success) in
+				if success {
+					DispatchQueue.main.async {
+						self.activityIndicator.stopAnimating()
+						self.activityIndicator.removeFromSuperview()
+					}
+				}
+			})
 		} else {
 			guard let data = result else {return}
-			imageView.loadImageFrom(urlString: data.url)
+			imageView.loadImageFrom(urlString: data.url, closure: {(success) in
+				if success {
+					DispatchQueue.main.async {
+						self.activityIndicator.stopAnimating()
+						self.activityIndicator.removeFromSuperview()
+					}
+				}
+			})
 		}
 	}
 	

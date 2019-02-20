@@ -16,6 +16,7 @@ class HTTPRequest {
 	static let shared = HTTPRequest()
 	
 	var state: JSONrequestState = .NotSearched
+	var dataTask: URLSessionDataTask?
 	let headers = [
 		"x-api-key" : "386f6edf-ec2b-4baf-91dd-686d132bf0b8"
 	]
@@ -31,14 +32,20 @@ class HTTPRequest {
 		var request = URLRequest(url: url!)
 		request.httpMethod = "GET"
 		request.allHTTPHeaderFields = headers
+		request.timeoutInterval = 300
 		return request
 	}
 	
 	func makeRequest<T: Codable>(url request: URLRequest, for dataStructure: T.Type, closure: @escaping (Bool, ([AnyObject])) -> (Void)) {
 		var success = false
 		print("Request made is as follows \(request)")
-		URLSession.shared.dataTask(with: request) { (data, response, error) in
-			guard let response = response as? HTTPURLResponse else {return}
+		dataTask?.cancel()
+		dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+			guard let response = response as? HTTPURLResponse else {
+				success = false
+				closure(success, [])
+				return
+			}
 			if response.statusCode == 200 {
 				guard let data = data else {return}
 				do {
@@ -60,6 +67,7 @@ class HTTPRequest {
 				success = false
 				closure(success, [])
 			}
-		} .resume()
+		}
+		dataTask?.resume()
 	}
 }

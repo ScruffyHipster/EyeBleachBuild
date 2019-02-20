@@ -11,7 +11,7 @@ import UIKit
 
 extension UIImageView {
 	//This extention is used to download an image from the url passed in asyncronously
-	func loadImageFrom(urlString: String) {
+	func loadImageFrom(urlString: String, closure: @escaping ((Bool) -> ())) {
 		guard let url = URL(string: urlString) else {return}
 		guard let imageFromCache = imageCache.object(forKey: urlString as NSString) else {
 			URLSession.shared.downloadTask(with: url) {
@@ -23,6 +23,7 @@ extension UIImageView {
 							weakSelf.image = image
 						}
 					}
+					closure(true)
 				}
 				}.resume()
 			return

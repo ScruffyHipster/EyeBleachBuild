@@ -69,6 +69,10 @@ class HomeViewController: UIViewController {
 		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
 			if success == false {
 				createAlert(vc: self, title: "Error", message: "Sorry, an error occured. Cannot retrive data from server", style: .alert)
+				DispatchQueue.main.async {
+					self.blurView.removeFromSuperview()
+					hudView.remove(animated: true)
+				}
 			} else if success == true {
 				self.resultsData.populateData(with: data)
 				print(data)
