@@ -18,6 +18,7 @@ class SelectedResultViewController: UIViewController {
 	//MARK:- Properties
 	var result: ResultsObject?
 	var savedResult: SavedResult?
+	let request = HTTPRequest.shared
 	var showSaved: Bool = false
 	weak var delegate: SelectedResultsViewControllerDelegate?
 	var shouldBeSaved: Bool = false
@@ -44,6 +45,10 @@ class SelectedResultViewController: UIViewController {
 	//MARK:- Actions
 	@IBAction func didTapSaveButton(_ sender: Any) {
 		save()
+		if let url = result?.url {
+			print("Saving image")
+			request.downloadImage(url)
+		}
 	}
 	
 	@IBAction func didTapDoneButton(_ sender: Any) {
@@ -59,11 +64,13 @@ class SelectedResultViewController: UIViewController {
     }
 	
 	func setUp() {
+		saveButton.isHidden = showSaved
 		if showSaved {
 			print("showing saved")
 			guard let data = savedResult else {return}
 			guard let url = data.url else {return}
-			imageView.loadImageFrom(urlString: url, closure: { (success) in
+			let savedImage = retriveImages(url: url)
+			imageView.loadImageFrom(urlString: savedImage, closure: { (success) in
 				if success {
 					DispatchQueue.main.async {
 						self.activityIndicator.stopAnimating()
@@ -83,6 +90,26 @@ class SelectedResultViewController: UIViewController {
 			})
 		}
 	}
+	
+	func retriveImages(url: String) -> String {
+		//FileManager
+		let fileManager = FileManager.default
+		var urlToReturn = ""
+		do {
+			//Gets path to the folder in the documents directory using global constant --
+			//TODO:- needs to change
+			let path = try fileManager.contentsOfDirectory(at: filePath, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
+			//retrives the image from the document directory
+			let image = fileManager.localFileUrl(for: URL(string: url)!).absoluteString
+			urlToReturn = image
+			print(image)
+			print(path)
+		} catch {
+			print("Error: \(error.localizedDescription)")
+		}
+		return urlToReturn
+	}
+	
 	
 	func save() {
 		shouldBeSaved = !shouldBeSaved

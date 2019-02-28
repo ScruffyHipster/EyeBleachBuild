@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HTTPRequest {
+class HTTPRequest: NSObject {
 	
 	//MARK:- Properties
 	
@@ -17,12 +17,17 @@ class HTTPRequest {
 	
 	var state: JSONrequestState = .NotSearched
 	var dataTask: URLSessionDataTask?
+	var activeDownload: [URL: URLSessionDownloadTask] = [:]
 	let headers = [
 		"x-api-key" : "386f6edf-ec2b-4baf-91dd-686d132bf0b8"
 	]
 	lazy var decoder: JSONDecoder = {
 		let decoder = JSONDecoder()
 		return decoder
+	}()
+	lazy var session: URLSession = {
+		let config = URLSessionConfiguration.default
+		return URLSession(configuration: config, delegate: self, delegateQueue: nil)
 	}()
 	
 	//MARK:- Methods
@@ -40,7 +45,7 @@ class HTTPRequest {
 		var success = false
 		print("Request made is as follows \(request)")
 		dataTask?.cancel()
-		dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+		dataTask = session.dataTask(with: request) { (data, response, error) in
 			guard let response = response as? HTTPURLResponse else {
 				success = false
 				closure(success, [])
@@ -70,4 +75,39 @@ class HTTPRequest {
 		}
 		dataTask?.resume()
 	}
+	
+	func downloadImage(_ imageUrl: String) {
+		let imageUrl = URL(string: imageUrl)
+		if let url = imageUrl {
+			let download = session.downloadTask(with: url)
+			download.resume()
+			activeDownload[url] = download
+		}
+	}
+}
+
+
+extension HTTPRequest: URLSessionDownloadDelegate {
+	func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+		print("Downloaded image to \(location)")
+		
+		guard let sourceUrl = downloadTask.originalRequest?.url else {return}
+		
+		activeDownload[sourceUrl] = nil
+		
+		let fileManager = FileManager.default
+		
+		let destinationUrl = fileManager.localFileUrl(for: sourceUrl)
+		print("Source url is \(sourceUrl)")
+		print(destinationUrl)
+		
+		try? fileManager.removeItem(at: destinationUrl)
+		do {
+			try fileManager.copyItem(at: location, to: destinationUrl)
+		} catch let error {
+			print(error.localizedDescription)
+		}
+	}
+	
+	
 }

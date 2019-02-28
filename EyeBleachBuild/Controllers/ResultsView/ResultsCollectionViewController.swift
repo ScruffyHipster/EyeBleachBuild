@@ -23,11 +23,9 @@ class ResultsCollectionViewController: UIViewController {
 	var managedObjectContext: NSManagedObjectContext?
 	
 	//MARK:- Outlets
-	
 	@IBOutlet weak var collectionView: UICollectionView!
 	
 	//MARK:- Methods
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		guard resultsData != nil else {
@@ -35,6 +33,56 @@ class ResultsCollectionViewController: UIViewController {
 			return
 		}
 		setUpCollectionView()
+		setUpForSaved(showingSaved)
+	}
+	
+	func setUpForSaved(_ saved: Bool) {
+		if saved {
+			navigationItem.rightBarButtonItem = editButtonItem
+			isEditing = false
+		}
+	}
+	
+	override func setEditing(_ editing: Bool, animated: Bool) {
+		super.setEditing(editing, animated: true)
+		collectionView.allowsMultipleSelection = editing
+		navigationItem.leftBarButtonItem = editing ? UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteItems)) : nil
+		let indexs = collectionView.indexPathsForVisibleItems
+		for index in indexs {
+			let cell = collectionView.cellForItem(at: index) as? ResultsCollectionViewCell
+			cell?.isEditing = editing
+		}
+	}
+	
+	@objc func deleteItems() {
+		let selectedCells = collectionView.indexPathsForSelectedItems
+		let deleteAlert = UIAlertController(title: "Delete", message: "Do you want to delete these items?", preferredStyle: .actionSheet)
+		deleteAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
+			guard let selected = selectedCells else {return}
+			let items = selected.map({$0}).sorted().reversed()
+			for item in items {
+				guard let data = self.resultsData?.objectDataArray?[item.row] as? SavedResult else {return}
+				self.resultsData?.objectDataArray?.remove(at: item.row)
+				removeFile(from: (data.url!))
+				self.managedObjectContext?.delete(data)
+				do {
+					try self.managedObjectContext?.save()
+				} catch {
+					print("Error \(error.localizedDescription)")
+					let alert = UIAlertController(title: "Error", message: "Had an issue trying to delete the item. If issue persists please contact the developer. Sorry for any annoyance caused!!", preferredStyle: .alert)
+					alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+				}
+				if (self.resultsData?.objectDataArray?.count)! <= 0 {
+					UserDefaults.standard.set(false, forKey: "savedImage")
+					self.dismiss(animated: true, completion: nil)
+				}
+				self.collectionView.reloadData()
+			}
+		}))
+		deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+			print("Cancelled")
+		}))
+		present(deleteAlert, animated: true)
 	}
 	
 	func setUpCollectionView() {
@@ -91,14 +139,18 @@ class ResultsCollectionViewController: UIViewController {
 	
 }
 
+//MARK:- Collection view delegate
 extension ResultsCollectionViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		showingSaved ? performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewerViewController.identifier, sender: indexPath) : performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
+		if !isEditing {
+			showingSaved ? performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewerViewController.identifier, sender: indexPath) : performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
+		}
 		
 		//TODO:- Model card pop up from bottom. Best to have it pop out of frame into view rather than having a card view from the outset
 	}
 }
 
+//MARK:- SelectedResultsControllerDelegate
 extension ResultsCollectionViewController: SelectedResultsViewControllerDelegate {
 	func didTapSaveButton(item: String, sender: SelectedResultViewController) {
 		//TODO:- add in save function here to coredata
@@ -111,6 +163,7 @@ extension ResultsCollectionViewController: SelectedResultsViewControllerDelegate
 		} catch {
 			print("Error occured when trying to save \(error.localizedDescription)")
 		}
+		UserDefaults.standard.set(true, forKey: "savedImage")
 		dismiss(animated: true, completion: nil)
 	}
 }

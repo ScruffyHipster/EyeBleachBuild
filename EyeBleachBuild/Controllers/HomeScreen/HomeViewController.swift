@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
 	var request = HTTPRequest.shared
 	var category: Int?
 	var managedObjectContext: NSManagedObjectContext?
+	
 	lazy var resultsData: ResultsObjectData = {
 		let data = ResultsObjectData()
 		return data
@@ -85,26 +86,8 @@ class HomeViewController: UIViewController {
 		})
 	}
 	@IBAction func didTapSavedButton(_ sender: Any) {
-		checkForSavedImages()
 		performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewController.identifier, sender: nil)
 	}
-	
-	func checkForSavedImages() {
-		let resultsSaved = UserDefaults.standard.object(forKey: "savedImage") as! Bool
-		if resultsSaved == true {
-			let fetchedRequest = NSFetchRequest<SavedResult>()
-			let entity = SavedResult.entity()
-			fetchedRequest.entity = entity
-			do {
-				let savedData = try managedObjectContext?.fetch(fetchedRequest)
-				guard let data = savedData else {return}
-				self.resultsData.populateData(with: data)
-			} catch {
-				print(error.localizedDescription)
-			}
-		}
-	}
-	
 	
 	@IBAction func categorySldierChanged(_ sender: UISlider) {
 		slider.value = roundf(slider.value)
@@ -128,12 +111,34 @@ class HomeViewController: UIViewController {
 		setUpView()
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		checkForSavedImages()
+	}
 	
 	func setUpView() {
 		slider.value = 1
 		navigationController?.navigationBar.prefersLargeTitles = true
 	}
 	
+	func checkForSavedImages() {
+		//CoreData
+		let resultsSaved = UserDefaults.standard.object(forKey: "savedImage") as! Bool
+		savedButton.isHidden = !resultsSaved
+		if resultsSaved == true {
+			print("true")
+			let fetchedRequest = NSFetchRequest<SavedResult>()
+			let entity = SavedResult.entity()
+			fetchedRequest.entity = entity
+			do {
+				let savedData = try managedObjectContext?.fetch(fetchedRequest)
+				guard let data = savedData else {return}
+				self.resultsData.populateData(with: data)
+			} catch {
+				print(error.localizedDescription)
+			}
+		}
+	}
 	
 }
 

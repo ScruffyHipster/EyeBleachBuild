@@ -26,6 +26,11 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 			backGroundView.addSubview(activityIndicator)
 		}
 	}
+	@IBOutlet weak var selectionImage: UIImageView! {
+		didSet {
+			selectionImage.isHidden = true
+		}
+	}
 	
 	
 	var downloadTask: URLSessionDownloadTask?
@@ -35,6 +40,18 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 		av.alpha = 1
 		return av
 	}()
+	var isEditing: Bool = false {
+		didSet {
+			return selectionImage.isHidden = !isEditing
+		}
+	}
+	override var isSelected: Bool {
+		didSet {
+			if isEditing {
+				return selectionImage.image = isSelected ? UIImage(named: "tick") : UIImage(named: "empty")
+			}
+		}
+	}
 	
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -61,7 +78,9 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 				print("failed")
 				return
 			}
-			backgroundImage.loadImageFrom(urlString: url, closure: {(success) in
+			//retrives from disk
+			let savedImage = retriveImages(url: url)
+			backgroundImage.loadImageFrom(urlString: savedImage, closure: {(success) in
 				if success {
 					DispatchQueue.main.async {
 						self.activityIndicator.stopAnimating()
@@ -70,6 +89,25 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 				}
 			})
 		}
+	}
+	
+	func retriveImages(url: String) -> String {
+		//FileManager
+		let fileManager = FileManager.default
+		var urlToReturn = ""
+		do {
+			//Gets path to the folder in the documents directory using global constant --
+			//TODO:- needs to change
+			let path = try fileManager.contentsOfDirectory(at: filePath, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
+			//retrives the image from the document directory
+			let image = fileManager.localFileUrl(for: URL(string: url)!).absoluteString
+			urlToReturn = image
+			print(image)
+			print(path)
+		} catch {
+			print("Error: \(error.localizedDescription)")
+		}
+		return urlToReturn
 	}
 	
 	override func prepareForReuse() {

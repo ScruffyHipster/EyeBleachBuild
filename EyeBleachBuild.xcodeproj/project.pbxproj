@@ -30,6 +30,7 @@
 		4AC6194522070C7D002856B6 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194422070C7D002856B6 /* HttpRequest.swift */; };
 		4AC6194822071914002856B6 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194722071914002856B6 /* Alerts.swift */; };
 		4ACA7325221B4A18006D6DDA /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA7324221B4A18006D6DDA /* HUDView.swift */; };
+		4AF56B7C221F155D004CAC39 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF56B7B221F155D004CAC39 /* FileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		4AC6194422070C7D002856B6 /* HttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		4AC6194722071914002856B6 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		4ACA7324221B4A18006D6DDA /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
+		4AF56B7B221F155D004CAC39 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +219,7 @@
 				4A4BEAAF220A04020092077E /* AddShadows.swift */,
 				4A664057220756A100666AA2 /* ImageDownload.swift */,
 				4A1EA5A72211651A0050F199 /* RoundedButton.swift */,
+				4AF56B7B221F155D004CAC39 /* FileManager.swift */,
 				4AC6194A22071927002856B6 /* Alerts */,
 			);
 			path = Helpers;
@@ -317,6 +320,7 @@
 				4A1EA5A12210933E0050F199 /* SelectedResultViewController.swift in Sources */,
 				4A1EA5A82211651A0050F199 /* RoundedButton.swift in Sources */,
 				4A664058220756A100666AA2 /* ImageDownload.swift in Sources */,
+				4AF56B7C221F155D004CAC39 /* FileManager.swift in Sources */,
 				4A4BEAB0220A04020092077E /* AddShadows.swift in Sources */,
 				4AC6194822071914002856B6 /* Alerts.swift in Sources */,
 				4AC6193D22070555002856B6 /* ResultsObject.swift in Sources */,

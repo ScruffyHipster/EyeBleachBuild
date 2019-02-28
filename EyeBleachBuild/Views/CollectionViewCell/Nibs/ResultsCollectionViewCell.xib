@@ -26,12 +26,21 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qac-fZ-21M">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty" translatesAutoresizingMaskIntoConstraints="NO" id="zzs-Wi-ftv">
+                        <rect key="frame" x="149" y="149" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="Pon-pV-tD3"/>
+                            <constraint firstAttribute="width" constant="44" id="pSo-gh-V7B"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="qac-fZ-21M" secondAttribute="bottom" id="1qo-Hl-5NF"/>
+                <constraint firstAttribute="trailing" secondItem="zzs-Wi-ftv" secondAttribute="trailing" constant="7" id="4Q0-aa-in0"/>
                 <constraint firstItem="Y7L-0a-654" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7vn-rm-9bq"/>
                 <constraint firstItem="qac-fZ-21M" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="9oq-pr-Ly1"/>
+                <constraint firstAttribute="bottom" secondItem="zzs-Wi-ftv" secondAttribute="bottom" constant="7" id="BF0-f3-BXR"/>
                 <constraint firstAttribute="trailing" secondItem="qac-fZ-21M" secondAttribute="trailing" id="DXW-Q7-Dsd"/>
                 <constraint firstAttribute="bottom" secondItem="Y7L-0a-654" secondAttribute="bottom" id="Tcx-NM-3W6"/>
                 <constraint firstItem="qac-fZ-21M" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eai-bP-4Mj"/>
@@ -42,7 +51,11 @@
             <connections>
                 <outlet property="backGroundView" destination="Y7L-0a-654" id="XCs-3m-dwd"/>
                 <outlet property="backgroundImage" destination="qac-fZ-21M" id="Tdk-vH-xXs"/>
+                <outlet property="selectionImage" destination="zzs-Wi-ftv" id="1FQ-IO-s40"/>
             </connections>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="empty" width="44" height="44"/>
+    </resources>
 </document>
