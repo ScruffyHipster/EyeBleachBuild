@@ -40,7 +40,7 @@
                                 <color key="textColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Space" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7y-t6-Thk">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Space" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7y-t6-Thk">
                                 <rect key="frame" x="172" y="631" width="70" height="31.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="26"/>
                                 <color key="textColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
@@ -65,17 +65,28 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ne2-G4-kh8">
+                                <rect key="frame" x="183" y="762" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="didTapCancel" destination="BYZ-38-t0r" eventType="touchUpInside" id="WCs-Rb-yet"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ne2-G4-kh8" secondAttribute="bottom" constant="70" id="0lP-m9-kQy"/>
                             <constraint firstItem="c7y-t6-Thk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="172" id="66s-S4-KYe"/>
                             <constraint firstItem="19b-zJ-oDm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="118" id="9b6-UW-7Cr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="CrC-6S-RLO" secondAttribute="bottom" constant="108" id="HIU-WS-wVB"/>
+                            <constraint firstItem="ne2-G4-kh8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="183" id="HOe-AG-eYe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="19b-zJ-oDm" secondAttribute="trailing" constant="117" id="REc-0O-oRF"/>
                             <constraint firstItem="19b-zJ-oDm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="83" id="TjZ-F0-7p2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="c7y-t6-Thk" secondAttribute="trailing" constant="172" id="W1k-4L-lAi"/>
                             <constraint firstItem="NJF-rm-QsK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XmR-Wv-Ops"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RJ4-Ia-iHn" secondAttribute="trailing" constant="107" id="YVG-qB-wdV"/>
+                            <constraint firstItem="ne2-G4-kh8" firstAttribute="top" secondItem="CrC-6S-RLO" secondAttribute="bottom" constant="8" id="eBf-4l-ai9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ne2-G4-kh8" secondAttribute="trailing" constant="183" id="gA9-KG-p0g"/>
                             <constraint firstItem="CrC-6S-RLO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="108" id="gfN-8w-det"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CrC-6S-RLO" secondAttribute="trailing" constant="107" id="h9g-VP-Id0"/>
                             <constraint firstItem="RJ4-Ia-iHn" firstAttribute="top" secondItem="NJF-rm-QsK" secondAttribute="bottom" constant="78" id="lJA-Zp-6PH"/>
@@ -87,6 +98,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Eye Bleach" largeTitleDisplayMode="always" id="OBS-bi-xrz"/>
                     <connections>
+                        <outlet property="cancelButton" destination="ne2-G4-kh8" id="89R-MZ-UMv"/>
                         <outlet property="categoryLabel" destination="c7y-t6-Thk" id="x0K-b1-VNU"/>
                         <outlet property="savedButton" destination="OAb-X4-z3O" id="Q50-7K-cam"/>
                         <outlet property="showButton" destination="NNR-R4-mya" id="UpE-zz-gFG"/>

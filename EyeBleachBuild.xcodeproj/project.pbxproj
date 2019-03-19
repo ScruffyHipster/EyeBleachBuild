@@ -30,7 +30,6 @@
 		4AC6194222070A0A002856B6 /* ResultsObjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194122070A0A002856B6 /* ResultsObjectData.swift */; };
 		4AC6194522070C7D002856B6 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194422070C7D002856B6 /* HttpRequest.swift */; };
 		4AC6194822071914002856B6 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194722071914002856B6 /* Alerts.swift */; };
-		4ACA7325221B4A18006D6DDA /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACA7324221B4A18006D6DDA /* HUDView.swift */; };
 		4AF56B7C221F155D004CAC39 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF56B7B221F155D004CAC39 /* FileManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,7 +59,6 @@
 		4AC6194122070A0A002856B6 /* ResultsObjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsObjectData.swift; sourceTree = "<group>"; };
 		4AC6194422070C7D002856B6 /* HttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		4AC6194722071914002856B6 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		4ACA7324221B4A18006D6DDA /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		4AF56B7B221F155D004CAC39 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,7 +138,6 @@
 		4AC6192E2206F92C002856B6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4ACA7324221B4A18006D6DDA /* HUDView.swift */,
 				4AC6193A2207050A002856B6 /* CollectionViewCell */,
 				4AC6192F2206F938002856B6 /* StoryBoards */,
 			);
@@ -327,7 +324,6 @@
 				4A4BEAB0220A04020092077E /* AddShadows.swift in Sources */,
 				4AC6194822071914002856B6 /* Alerts.swift in Sources */,
 				4AC6193D22070555002856B6 /* ResultsObject.swift in Sources */,
-				4ACA7325221B4A18006D6DDA /* HUDView.swift in Sources */,
 				4A90180F222D9A2A0069F8B2 /* Animations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

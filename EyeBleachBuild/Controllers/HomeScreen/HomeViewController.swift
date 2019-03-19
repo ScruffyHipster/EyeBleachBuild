@@ -20,12 +20,12 @@ class HomeViewController: UIViewController {
 		let data = ResultsObjectData()
 		return data
 	}()
-	lazy var blurView: UIVisualEffectView = {
-		var blur = UIBlurEffect(style: .light)
-		var blurView = UIVisualEffectView(effect: blur)
-		blurView.frame = view.frame
-		blurView.alpha = 0.0
-		return blurView
+	lazy var acitivtySpinner: UIActivityIndicatorView = {
+		var spinner = UIActivityIndicatorView()
+		spinner.style = .whiteLarge
+		spinner.color = UsableColors.grey.colour
+		spinner.startAnimating()
+		return spinner
 	}()
 	
 	//MARK:- Outlets
@@ -50,44 +50,11 @@ class HomeViewController: UIViewController {
 		}
 	}
 	@IBOutlet weak var titleLabel: UILabel!
-	
+	@IBOutlet weak var cancelButton: UIButton!
 	
 	//MARK:- Actions
 	@IBAction func didTapShowMeButton(_ sender: Any) {
-		
-		
-		//MARK:- Animations
-		let spring = CASpringAnimation(keyPath: "borderWidth")
-		spring.damping = 8
-		spring.initialVelocity = 0.6
-		spring.mass = 1
-		spring.stiffness = 100
-		spring.duration = 1.0
-		spring.fromValue = 1.0
-		spring.toValue = 0.0
-		showButton.layer.add(spring, forKey: nil)
-		
-		UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.6, options: [], animations: {
-			self.showButton.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
-			self.showButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-			self.showButton.layer.borderWidth = 1.0
-			self.showButton.layer.borderColor = UIColor.white.cgColor
-		}) { (success) in
-			if success {
-				self.showButton.transform = .identity
-				self.showButton.layer.borderColor = UIColor.clear.cgColor
-			}
-		}
-		
-		self.view.addSubview(blurView)
-		
-		let fade = CABasicAnimation(keyPath: "alpha")
-		fade.toValue = 0.0
-		fade.fromValue = 1.0
-		fade.duration = 0.6
-		blurView.layer.add(fade, forKey: nil)
-		
-		
+		addSpinner()
 		switch slider.value {
 		case 0.0:
 			category = 1
@@ -112,7 +79,7 @@ class HomeViewController: UIViewController {
 				}
 			} else if success == true {
 				self.resultsData.populateData(with: data)
-				print(data)
+//				print(data)
 				DispatchQueue.main.async {
 					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
 				}
@@ -138,6 +105,14 @@ class HomeViewController: UIViewController {
 		default:
 			break
 		}
+	}
+	
+	@IBAction func didTapCancel() {
+		request.cancel()
+		acitivtySpinner.alpha = 0.0
+		cancelButton.alpha = 0.0
+		savedButton.alpha = 1.0
+		showButton.alpha = 1.0
 	}
 	
 	//MARK:- Methods
@@ -175,6 +150,15 @@ class HomeViewController: UIViewController {
 				print(error.localizedDescription)
 			}
 		}
+	}
+	
+	func addSpinner() {
+		showButton.alpha = 0.0
+		savedButton.alpha = 0.0
+		cancelButton.alpha = 1.0
+		slider.isUserInteractionEnabled = false
+		acitivtySpinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height - view.frame.size.height / 5)
+		view.addSubview(acitivtySpinner)
 	}
 	
 }

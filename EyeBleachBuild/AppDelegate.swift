@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let nav = window?.rootViewController as? UINavigationController
 		let vc = nav?.viewControllers[0] as! HomeViewController
 		vc.managedObjectContext = managedObjectContext
+		print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 		return true
 	}
 

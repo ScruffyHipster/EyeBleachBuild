@@ -84,6 +84,10 @@ class HTTPRequest: NSObject {
 			activeDownload[url] = download
 		}
 	}
+	
+	func cancel() {
+		dataTask?.cancel()
+	}
 }
 
 

@@ -54,10 +54,6 @@ class ResultsCollectionViewController: UIViewController {
 		}
 	}
 	
-	override func viewWillDisappear(_ animated: Bool) {
-		navigationController?.navigationBar.isHidden = true
-	}
-	
 	override func setEditing(_ editing: Bool, animated: Bool) {
 		super.setEditing(editing, animated: true)
 		collectionView.allowsMultipleSelection = editing
