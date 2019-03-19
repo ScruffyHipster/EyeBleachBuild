@@ -56,3 +56,20 @@ enum SegueIdentifiers {
 		}
 	}
 }
+
+enum UsableColors {
+	case orange
+	case grey
+	case black
+	
+	var colour: UIColor {
+		switch self {
+		case .grey:
+			return UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1)
+		case .black:
+			return UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1)
+		case .orange:
+			return UIColor(red: 255/255, green: 149/255, blue: 0/255, alpha: 1)
+		}
+	}
+}

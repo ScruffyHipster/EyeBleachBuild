@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIButton {
-
 	func roundedTransparentButton() {
 		self.layer.cornerRadius = 8
 		self.clipsToBounds = true

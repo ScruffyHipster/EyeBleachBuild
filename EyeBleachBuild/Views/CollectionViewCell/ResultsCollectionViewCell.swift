@@ -22,7 +22,8 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 	}
 	@IBOutlet weak var backGroundView: UIView! {
 		didSet {
-			backGroundView.backgroundColor = UIColor.gray
+			backGroundView.backgroundColor = UsableColors.grey.colour
+			activityIndicator.center = backGroundView.center
 			backGroundView.addSubview(activityIndicator)
 		}
 	}
@@ -31,7 +32,6 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 			selectionImage.isHidden = true
 		}
 	}
-	
 	
 	var downloadTask: URLSessionDownloadTask?
 	lazy var activityIndicator: UIActivityIndicatorView = {
@@ -57,6 +57,11 @@ class ResultsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
 		backGroundView.layer.cornerRadius = 8
 		backGroundView.clipsToBounds = true
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowOffset = CGSize(width: 2, height: 4)
+		layer.shadowRadius = 3.0
+		layer.shadowOpacity = 0.4
+		layer.masksToBounds = false
     }
 	
 	override func draw(_ rect: CGRect) {
@@ -69,7 +74,7 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 				if success {
 					DispatchQueue.main.async {
 						self.activityIndicator.stopAnimating()
-						self.activityIndicator.removeFromSuperview()
+self.activityIndicator.removeFromSuperview()
 					}
 				}
 			})

@@ -33,14 +33,29 @@ class ResultsCollectionViewController: UIViewController {
 			return
 		}
 		setUpCollectionView()
+		setupNavigationBarView()
 		setUpForSaved(showingSaved)
 	}
 	
+	func setupNavigationBarView() {
+		guard let navBar = navigationController?.navigationBar else {return}
+		navBar.isHidden = false
+		navBar.prefersLargeTitles = true
+//		navigationController?.navigationBar.backgroundColor = UIColor.clear
+//		navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key("foregroundColor") : UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 0)]
+		navBar.addShadow(radius: 2.0, offSet: CGSize(width: 1.0, height: 1.0), color: UIColor.black.cgColor, opacity: 0.4)
+	}
+	
+
 	func setUpForSaved(_ saved: Bool) {
 		if saved {
 			navigationItem.rightBarButtonItem = editButtonItem
 			isEditing = false
 		}
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		navigationController?.navigationBar.isHidden = true
 	}
 	
 	override func setEditing(_ editing: Bool, animated: Bool) {
@@ -99,11 +114,12 @@ class ResultsCollectionViewController: UIViewController {
 	
 	func setUpCollecitonViewFlow() {
 		//Set up instagram like colleciton view layout
-		let width = (self.view.frame.width - 40) / 3
+		let width = (self.view.frame.width - 30) / 2
+		let height = (self.view.frame.height / 3) - 10
 		let flow = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-		flow.itemSize = CGSize(width: width, height: width)
+		flow.itemSize = CGSize(width: width, height: height)
 		flow.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-		flow.minimumLineSpacing = 5.0
+		flow.minimumLineSpacing = 20.0
 		flow.minimumInteritemSpacing = 5.0
 	}
 	
@@ -136,7 +152,6 @@ class ResultsCollectionViewController: UIViewController {
 		//General housekeeping
 		imageCache.removeAllObjects()
 	}
-	
 }
 
 //MARK:- Collection view delegate
@@ -145,15 +160,12 @@ extension ResultsCollectionViewController: UICollectionViewDelegate {
 		if !isEditing {
 			showingSaved ? performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewerViewController.identifier, sender: indexPath) : performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
 		}
-		
-		//TODO:- Model card pop up from bottom. Best to have it pop out of frame into view rather than having a card view from the outset
 	}
 }
 
 //MARK:- SelectedResultsControllerDelegate
 extension ResultsCollectionViewController: SelectedResultsViewControllerDelegate {
 	func didTapSaveButton(item: String, sender: SelectedResultViewController) {
-		//TODO:- add in save function here to coredata
 		guard let managedObjectContext = managedObjectContext else {return}
 		let saveResult = SavedResult(context: managedObjectContext)
 		saveResult.url = item

@@ -30,17 +30,24 @@ class SelectedResultViewController: UIViewController {
 	}()
 	
 	//MARK:- Outlets
-	@IBOutlet weak var imageView: UIImageView!
-	@IBOutlet weak var saveButton: UIButton! {
+	@IBOutlet weak var imageView: UIImageView! {
 		didSet {
-			saveButton.roundedTransparentButton()
+			imageView.layer.cornerRadius = 8.0
+			imageView.clipsToBounds = true
 		}
 	}
-	@IBOutlet weak var doneButton: UIButton! {
+	@IBOutlet weak var shadowView: UIView! {
 		didSet {
-			saveButton.roundedTransparentButton()
+			shadowView.layer.cornerRadius = 8
+			shadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
+			shadowView.layer.shadowColor = UIColor.black.cgColor
+			shadowView.layer.shadowOpacity = 0.4
+			shadowView.layer.shadowRadius = 3.0
+			shadowView.layer.masksToBounds = false
 		}
 	}
+	@IBOutlet weak var saveButton: UIButton!
+	@IBOutlet weak var doneButton: UIBarButtonItem!
 	
 	//MARK:- Actions
 	@IBAction func didTapSaveButton(_ sender: Any) {
@@ -61,6 +68,7 @@ class SelectedResultViewController: UIViewController {
         super.viewDidLoad()
 		self.view.addSubview(activityIndicator)
 		setUp()
+		navigationController?.navigationBar.prefersLargeTitles = false
     }
 	
 	func setUp() {
@@ -113,5 +121,6 @@ class SelectedResultViewController: UIViewController {
 	
 	func save() {
 		shouldBeSaved = !shouldBeSaved
+		saveButton.isSelected = shouldBeSaved
 	}
 }

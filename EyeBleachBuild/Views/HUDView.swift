@@ -50,6 +50,7 @@ class HUDView: UIView {
 		text.draw(at: textPoint, withAttributes: attributes)
 	}
 	
+	//TODO:- Redraw this HUDView
 	func show(animated: Bool) {
 		alpha = 0
 		transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
@@ -64,6 +65,15 @@ class HUDView: UIView {
 				})
 			})
 		}
+	}
+	
+	func moveFrom(to: CGFloat, layer: CALayer) {
+		let anim = CABasicAnimation(keyPath: "position.y")
+		anim.fromValue = layer.position.y
+		anim.toValue = to
+		anim.duration = 0.5
+		layer.add(anim, forKey: nil)
+		layer.position.y = to
 	}
 	
 	func remove(animated: Bool) {
