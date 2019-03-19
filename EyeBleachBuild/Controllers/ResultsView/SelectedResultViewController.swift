@@ -71,6 +71,10 @@ class SelectedResultViewController: UIViewController {
 		navigationController?.navigationBar.prefersLargeTitles = false
     }
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+	}
+	
 	func setUp() {
 		saveButton.isHidden = showSaved
 		if showSaved {

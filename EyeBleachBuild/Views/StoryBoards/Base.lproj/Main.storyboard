@@ -50,14 +50,14 @@
                                 <rect key="frame" x="108" y="724" width="199" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NNR-R4-mya">
-                                        <rect key="frame" x="0.0" y="0.0" width="38" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="199" height="30"/>
                                         <state key="normal" title="Show"/>
                                         <connections>
                                             <action selector="didTapShowMeButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lg1-Iz-t5B"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAb-X4-z3O">
-                                        <rect key="frame" x="157" y="0.0" width="42" height="30"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAb-X4-z3O">
+                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="30"/>
                                         <state key="normal" title="Saved"/>
                                         <connections>
                                             <action selector="didTapSavedButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wVU-x2-WmY"/>
@@ -193,7 +193,11 @@
                         <viewLayoutGuide key="safeArea" id="sUv-QE-c6O"/>
                     </view>
                     <navigationItem key="navigationItem" id="hH0-9U-gXO">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cW9-Dr-2k4"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cW9-Dr-2k4">
+                            <connections>
+                                <action selector="didTapDoneButton:" destination="A9P-Yx-Wwo" id="shM-vS-hOh"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="doneButton" destination="cW9-Dr-2k4" id="8KS-Zz-NHk"/>

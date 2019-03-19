@@ -79,9 +79,9 @@ class HomeViewController: UIViewController {
 				}
 			} else if success == true {
 				self.resultsData.populateData(with: data)
-//				print(data)
 				DispatchQueue.main.async {
 					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
+					self.hideSpinner()
 				}
 			}
 		})
@@ -124,8 +124,12 @@ class HomeViewController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-//		checkForSavedImages()
-//		animateLabelsRight([titleLabel.layer, instructionLabel.layer])
+		navigationController?.navigationBar.isHidden = true
+		checkForSavedImages()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		navigationController?.navigationBar.isHidden = false
 	}
 	
 	func setUpView() {
@@ -135,7 +139,7 @@ class HomeViewController: UIViewController {
 	
 	func checkForSavedImages() {
 		//CoreData
-		let resultsSaved = UserDefaults.standard.object(forKey: "savedImage") as! Bool
+		guard let resultsSaved = UserDefaults.standard.object(forKey: "savedImage") as? Bool else {return}
 		savedButton.isHidden = !resultsSaved
 		if resultsSaved == true {
 			print("true")
@@ -159,6 +163,14 @@ class HomeViewController: UIViewController {
 		slider.isUserInteractionEnabled = false
 		acitivtySpinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height - view.frame.size.height / 5)
 		view.addSubview(acitivtySpinner)
+	}
+	
+	func hideSpinner() {
+		showButton.alpha = 1.0
+		savedButton.alpha = 1.0
+		cancelButton.alpha = 0.0
+		acitivtySpinner.stopAnimating()
+		acitivtySpinner.removeFromSuperview()
 	}
 	
 }
