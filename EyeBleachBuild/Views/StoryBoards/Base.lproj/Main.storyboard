@@ -143,8 +143,8 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="B4G-OD-gVF" id="G8H-49-VeN"/>
-                        <segue destination="A9P-Yx-Wwo" kind="show" identifier="ResultViewerViewController" id="A9y-8v-zWE"/>
-                        <segue destination="A9P-Yx-Wwo" kind="show" identifier="SavedResultsViewerViewController" id="bhi-Wb-PaQ"/>
+                        <segue destination="A9P-Yx-Wwo" kind="presentation" identifier="ResultViewerViewController" id="A9y-8v-zWE"/>
+                        <segue destination="A9P-Yx-Wwo" kind="presentation" identifier="SavedResultsViewerViewController" id="bhi-Wb-PaQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7rp-Ix-faV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -164,8 +164,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qte-pV-ilS">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qte-pV-ilS">
                                 <rect key="frame" x="26" y="108" width="362" height="686"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcB-Mb-Ddu">
                                 <rect key="frame" x="183" y="814" width="48" height="48"/>
@@ -179,25 +180,40 @@
                                     <action selector="didTapSaveButton:" destination="A9P-Yx-Wwo" eventType="touchUpInside" id="Fs7-18-PD6"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmb-T0-FL7">
+                                <rect key="frame" x="344" y="56" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="dhU-d4-7ZR"/>
+                                    <constraint firstAttribute="height" constant="44" id="lzk-OF-aw1"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="optionUnselected"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Rh-Km-HkI">
+                                <rect key="frame" x="26" y="56" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Y7m-qn-nYO"/>
+                                    <constraint firstAttribute="width" constant="44" id="yTf-s6-iVC"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="BackButton"/>
+                                <connections>
+                                    <action selector="didTapDismissDoneButton:" destination="A9P-Yx-Wwo" eventType="touchUpInside" id="Dnf-H2-3Q9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="sUv-QE-c6O" firstAttribute="trailing" secondItem="wcB-Mb-Ddu" secondAttribute="trailing" constant="183" id="Ebe-Vv-vpQ"/>
                             <constraint firstItem="wcB-Mb-Ddu" firstAttribute="leading" secondItem="sUv-QE-c6O" secondAttribute="leading" constant="183" id="KBB-Qs-1rp"/>
-                            <constraint firstItem="Qte-pV-ilS" firstAttribute="top" secondItem="sUv-QE-c6O" secondAttribute="top" constant="20" id="Okj-6K-Dzr"/>
-                            <constraint firstItem="sUv-QE-c6O" firstAttribute="trailing" secondItem="Qte-pV-ilS" secondAttribute="trailing" constant="26" id="Qsk-zP-iOY"/>
-                            <constraint firstItem="wcB-Mb-Ddu" firstAttribute="top" secondItem="Qte-pV-ilS" secondAttribute="bottom" constant="20" id="WBM-fi-jyb"/>
-                            <constraint firstItem="Qte-pV-ilS" firstAttribute="leading" secondItem="sUv-QE-c6O" secondAttribute="leading" constant="26" id="h04-oq-Q0m"/>
+                            <constraint firstItem="8Rh-Km-HkI" firstAttribute="top" secondItem="sUv-QE-c6O" secondAttribute="top" constant="12" id="Qg3-cf-h21"/>
+                            <constraint firstItem="rmb-T0-FL7" firstAttribute="top" secondItem="sUv-QE-c6O" secondAttribute="top" constant="12" id="ax1-za-Lpa"/>
+                            <constraint firstItem="sUv-QE-c6O" firstAttribute="trailing" secondItem="rmb-T0-FL7" secondAttribute="trailing" constant="26" id="db3-kK-2Ye"/>
+                            <constraint firstItem="8Rh-Km-HkI" firstAttribute="leading" secondItem="sUv-QE-c6O" secondAttribute="leading" constant="26" id="msX-wX-fM4"/>
                             <constraint firstItem="wcB-Mb-Ddu" firstAttribute="bottom" secondItem="sUv-QE-c6O" secondAttribute="bottom" id="tQQ-3Z-0Ph"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sUv-QE-c6O"/>
                     </view>
                     <navigationItem key="navigationItem" id="hH0-9U-gXO">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cW9-Dr-2k4">
-                            <connections>
-                                <action selector="didTapDoneButton:" destination="A9P-Yx-Wwo" id="shM-vS-hOh"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cW9-Dr-2k4"/>
                     </navigationItem>
                     <connections>
                         <outlet property="doneButton" destination="cW9-Dr-2k4" id="8KS-Zz-NHk"/>
@@ -230,8 +246,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BackButton" width="45" height="44"/>
         <image name="filledHeart" width="48" height="48"/>
         <image name="heart" width="48" height="48"/>
+        <image name="optionUnselected" width="39" height="12"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="bhi-Wb-PaQ"/>

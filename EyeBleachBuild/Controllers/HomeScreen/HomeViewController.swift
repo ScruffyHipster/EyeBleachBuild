@@ -20,11 +20,12 @@ class HomeViewController: UIViewController {
 		let data = ResultsObjectData()
 		return data
 	}()
-	lazy var acitivtySpinner: UIActivityIndicatorView = {
+	lazy var activitySpinner: UIActivityIndicatorView = {
 		var spinner = UIActivityIndicatorView()
 		spinner.style = .whiteLarge
 		spinner.color = UsableColors.grey.colour
 		spinner.startAnimating()
+		spinner.center.x = view.center.x
 		return spinner
 	}()
 	
@@ -54,37 +55,36 @@ class HomeViewController: UIViewController {
 	
 	//MARK:- Actions
 	@IBAction func didTapShowMeButton(_ sender: Any) {
-		addSpinner()
-		switch slider.value {
-		case 0.0:
-			category = 1
-		case 1.0:
-			category = 2
-		case 2.0:
-			category = 3
-		case 3.0:
-			category = 4
-		default:
-			break
-		}
-		
-		guard let category = category else {return}
-		UIApplication.shared.isNetworkActivityIndicatorVisible = true
-		let url = request.createUrl(category: category)
-		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
-			if success == false {
-				createAlert(vc: self, title: "Error", message: "Sorry, an error occured. Cannot retrive data from server", style: .alert)
-				DispatchQueue.main.async {
-					UIApplication.shared.isNetworkActivityIndicatorVisible = false
-				}
-			} else if success == true {
-				self.resultsData.populateData(with: data)
-				DispatchQueue.main.async {
-					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
-					self.hideSpinner()
-				}
-			}
-		})
+		moveButtons()
+//		switch slider.value {
+//		case 0.0:
+//			category = 1
+//		case 1.0:
+//			category = 2
+//		case 2.0:
+//			category = 3
+//		case 3.0:
+//			category = 4
+//		default:
+//			break
+//		}
+//
+//		guard let category = category else {return}
+//		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//		let url = request.createUrl(category: category)
+//		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
+//			if success == false {
+//				createAlert(vc: self, title: "Error", message: "Sorry, an error occured. Cannot retrive data from server", style: .alert)
+//				DispatchQueue.main.async {
+//					UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//				}
+//			} else if success == true {
+//				self.resultsData.populateData(with: data)
+//				DispatchQueue.main.async {
+//					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
+//				}
+//			}
+//		})
 	}
 	
 	@IBAction func didTapSavedButton(_ sender: Any) {
@@ -109,24 +109,32 @@ class HomeViewController: UIViewController {
 	
 	@IBAction func didTapCancel() {
 		request.cancel()
-		acitivtySpinner.alpha = 0.0
-		cancelButton.alpha = 0.0
-		savedButton.alpha = 1.0
-		showButton.alpha = 1.0
+		slider.isUserInteractionEnabled = true
+		opacity(layer: activitySpinner.layer, from: 1.0, to: 0.0, duration: 0.4)
+		opacity(layer: cancelButton.layer, from: 1.0, to: 0.0, duration: 0.4)
+		scaleAndTransform(layer: showButton.layer, from: showButton.layer.position.y, to: showButton.layer.position.y - 30, duration: 0.6)
+		opacity(layer: showButton.layer, from: 0.0, to: 1.0, duration: 0.4)
 	}
 	
 	//MARK:- Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setUpView()
+		
 	}
 	
 	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		navigationController?.navigationBar.isHidden = true
-		checkForSavedImages()
-	}
+//	override func viewWillAppear(_ animated: Bool) {
+//		super.viewWillAppear(animated)
+//		navigationController?.navigationBar.isHidden = true
+//		slider.isUserInteractionEnabled = true
+//		checkForSavedImages()
+//		self.showButton.alpha = 1.0
+//		self.showButton.transform = .identity
+//		self.savedButton.alpha = 1.0
+//		self.cancelButton.alpha = 0.0
+//		self.acitivtySpinner.removeFromSuperview()
+//	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.navigationBar.isHidden = false
@@ -135,6 +143,7 @@ class HomeViewController: UIViewController {
 	func setUpView() {
 		slider.value = 1
 		navigationController?.navigationBar.isHidden = true
+		startAnimation()
 	}
 	
 	func checkForSavedImages() {
@@ -156,21 +165,15 @@ class HomeViewController: UIViewController {
 		}
 	}
 	
-	func addSpinner() {
-		showButton.alpha = 0.0
-		savedButton.alpha = 0.0
-		cancelButton.alpha = 1.0
+	func moveButtons() {
+		scaleAndTransform(layer: showButton.layer, from: showButton.layer.position.y, to: showButton.layer.position.y + 30, duration: 0.4)
+		scaleAndTransform(layer: cancelButton.layer, from: cancelButton.layer.position.y + 30, to: cancelButton.layer.position.y, duration: 0.6)
+		view.addSubview(activitySpinner)
+		scaleAndTransform(layer: activitySpinner.layer, from: cancelButton.layer.position.y, to: cancelButton.layer.position.y - 50, duration: 0.6)
+		opacity(layer: showButton.layer, from: 1.0, to: 0.0, duration: 0.3)
+		opacity(layer: cancelButton.layer, from: 0.0, to: 1.0, duration: 0.4)
+		opacity(layer: activitySpinner.layer, from: 0.0, to: 1.0, duration: 0.4)
 		slider.isUserInteractionEnabled = false
-		acitivtySpinner.center = CGPoint(x: view.frame.size.width / 2, y: view.frame.size.height - view.frame.size.height / 5)
-		view.addSubview(acitivtySpinner)
-	}
-	
-	func hideSpinner() {
-		showButton.alpha = 1.0
-		savedButton.alpha = 1.0
-		cancelButton.alpha = 0.0
-		acitivtySpinner.stopAnimating()
-		acitivtySpinner.removeFromSuperview()
 	}
 	
 }
@@ -196,8 +199,56 @@ extension HomeViewController {
 	}
 }
 
+extension HomeViewController {
+	//MARK:- Animations
+	
+	func scaleAndTransform(layer: CALayer, from: CGFloat, to: CGFloat, duration: Double) {
+		let scaleAndTransform = CABasicAnimation(keyPath: "position.y")
+		scaleAndTransform.fromValue = from
+		scaleAndTransform.toValue = to
+		scaleAndTransform.duration = duration
+		layer.add(scaleAndTransform, forKey: nil)
+		layer.position.y = to
+	}
+	
+	func opacity(layer: CALayer, from: Float, to: Float, duration: Double) {
+		let opacityAnimation = CABasicAnimation(keyPath: "opacity")
+		opacityAnimation.fromValue = from
+		opacityAnimation.toValue = to
+		opacityAnimation.duration = duration
+		opacityAnimation.timingFunction = CAMediaTimingFunction(name: .easeIn)
+		layer.add(opacityAnimation, forKey: nil)
+		layer.opacity = to
+	}
+}
+
 //MARK:- Animations/ Delegate
 extension HomeViewController: CAAnimationDelegate {
+	
+	func startAnimation() {
+		let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+		fadeAnimation.delegate = self
+		fadeAnimation.fromValue = 0.0
+		fadeAnimation.toValue = 1.0
+		fadeAnimation.duration = 1.0
+		titleLabel.layer.add(fadeAnimation, forKey: nil)
+		fadeAnimation.beginTime = CACurrentMediaTime() + 0.1
+		categoryLabel.layer.add(fadeAnimation, forKey: nil)
+		fadeAnimation.beginTime = CACurrentMediaTime() + 0.1
+		slider.layer.add(fadeAnimation, forKey: nil)
+		let springPulse = CASpringAnimation(keyPath: "transform.scale")
+		springPulse.duration = 0.5
+		springPulse.initialVelocity = -10.0
+		springPulse.mass = 1
+		springPulse.damping = 10
+		springPulse.stiffness = 100
+		springPulse.duration = 1.0
+		springPulse.fromValue = 1.4
+		springPulse.toValue = 1.0
+		titleLabel.layer.add(springPulse, forKey: nil)
+	}
+	
+	
 	
 	func animateLabelsRight(_ labels: [CALayer]) {
 		//Can only add two labels at the moment
@@ -214,7 +265,6 @@ extension HomeViewController: CAAnimationDelegate {
 		labelGroup.animations = [flyRight, fadeIn]
 		labelGroup.duration = 1.0
 		labelGroup.setValue("labelGroup", forKey: "name")
-		
 		for label in labels {
 			guard let i = labels.firstIndex(of: label) else {return}
 			labelGroup.setValue(label, forKey: "layer")
@@ -240,6 +290,14 @@ extension HomeViewController: CAAnimationDelegate {
 			pulse.damping = 7.5
 			pulse.duration = 2.0
 			layer?.add(pulse, forKey: nil)
+		}
+		if name == "moveFadeGroup" {
+			UIView.animate(withDuration: 1) {
+//				self.showButton.layer.opacity = 0.0
+//				self.activitySpinner.alpha = 1.0
+//				self.cancelButton.alpha = 1.0
+//				self.view.addSubview(self.activitySpinner)
+			}
 		}
 	}
 }

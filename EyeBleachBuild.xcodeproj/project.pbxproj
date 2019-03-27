@@ -14,6 +14,7 @@
 		4A1EA5A82211651A0050F199 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1EA5A72211651A0050F199 /* RoundedButton.swift */; };
 		4A4BEAB0220A04020092077E /* AddShadows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEAAF220A04020092077E /* AddShadows.swift */; };
 		4A664058220756A100666AA2 /* ImageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A664057220756A100666AA2 /* ImageDownload.swift */; };
+		4A80A0C1224547B800386500 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A0C0224547B800386500 /* Gif.swift */; };
 		4A90180F222D9A2A0069F8B2 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A90180E222D9A2A0069F8B2 /* Animations.swift */; };
 		4AC619182206F907002856B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC619172206F907002856B6 /* AppDelegate.swift */; };
 		4AC6191A2206F907002856B6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC619192206F907002856B6 /* HomeViewController.swift */; };
@@ -41,6 +42,7 @@
 		4A1EA5A72211651A0050F199 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		4A4BEAAF220A04020092077E /* AddShadows.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddShadows.swift; sourceTree = "<group>"; };
 		4A664057220756A100666AA2 /* ImageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownload.swift; sourceTree = "<group>"; };
+		4A80A0C0224547B800386500 /* Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		4A90180E222D9A2A0069F8B2 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		4AC619142206F907002856B6 /* EyeBleachBuild.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EyeBleachBuild.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AC619172206F907002856B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 		4AC6192D2206F926002856B6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4A80A0C0224547B800386500 /* Gif.swift */,
 				4A1EA5A622109C080050F199 /* CoreDataModels */,
 				4A1EA59E221089BC0050F199 /* Cache.swift */,
 				4AC6194622070C82002856B6 /* HttpGroup */,
@@ -310,6 +313,7 @@
 				4AC6193722070448002856B6 /* ResultsCollectionViewDataSource.swift in Sources */,
 				4AC6194522070C7D002856B6 /* HttpRequest.swift in Sources */,
 				4AC6193322070426002856B6 /* ResultsCollectionViewCell.swift in Sources */,
+				4A80A0C1224547B800386500 /* Gif.swift in Sources */,
 				4AC6191A2206F907002856B6 /* HomeViewController.swift in Sources */,
 				4A1EA5A522109BFC0050F199 /* SavedResult+CoreDataProperties.swift in Sources */,
 				4AC619202206F907002856B6 /* EyeBleachBuild.xcdatamodeld in Sources */,

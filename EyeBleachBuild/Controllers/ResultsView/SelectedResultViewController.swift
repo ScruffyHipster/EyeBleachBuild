@@ -58,7 +58,7 @@ class SelectedResultViewController: UIViewController {
 		}
 	}
 	
-	@IBAction func didTapDoneButton(_ sender: Any) {
+	@IBAction func didTapDismissDoneButton(_ sender: Any) {
 		shouldBeSaved ? delegate?.didTapSaveButton(item: result!.url, sender: self) : dismiss(animated: true, completion: {
 			self.shouldBeSaved ? print("saved item") : print("nothing saved")
 		})
@@ -73,6 +73,7 @@ class SelectedResultViewController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		navigationController?.navigationBar.isHidden = true
 	}
 	
 	func setUp() {
