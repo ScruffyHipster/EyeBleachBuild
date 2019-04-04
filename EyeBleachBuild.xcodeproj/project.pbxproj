@@ -31,6 +31,7 @@
 		4AC6194222070A0A002856B6 /* ResultsObjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194122070A0A002856B6 /* ResultsObjectData.swift */; };
 		4AC6194522070C7D002856B6 /* HttpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194422070C7D002856B6 /* HttpRequest.swift */; };
 		4AC6194822071914002856B6 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6194722071914002856B6 /* Alerts.swift */; };
+		4AD98C5E224CB6A500DDD022 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD98C5D224CB6A500DDD022 /* Delay.swift */; };
 		4AF56B7C221F155D004CAC39 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF56B7B221F155D004CAC39 /* FileManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		4AC6194122070A0A002856B6 /* ResultsObjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsObjectData.swift; sourceTree = "<group>"; };
 		4AC6194422070C7D002856B6 /* HttpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRequest.swift; sourceTree = "<group>"; };
 		4AC6194722071914002856B6 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		4AD98C5D224CB6A500DDD022 /* Delay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 		4AF56B7B221F155D004CAC39 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -223,6 +225,7 @@
 				4A1EA5A72211651A0050F199 /* RoundedButton.swift */,
 				4AF56B7B221F155D004CAC39 /* FileManager.swift */,
 				4A90180E222D9A2A0069F8B2 /* Animations.swift */,
+				4AD98C5D224CB6A500DDD022 /* Delay.swift */,
 				4AC6194A22071927002856B6 /* Alerts */,
 			);
 			path = Helpers;
@@ -319,6 +322,7 @@
 				4AC619202206F907002856B6 /* EyeBleachBuild.xcdatamodeld in Sources */,
 				4AC6193922070490002856B6 /* Enums.swift in Sources */,
 				4AC6193F220706A6002856B6 /* ResultsCollectionViewController.swift in Sources */,
+				4AD98C5E224CB6A500DDD022 /* Delay.swift in Sources */,
 				4AC619182206F907002856B6 /* AppDelegate.swift in Sources */,
 				4AC6194222070A0A002856B6 /* ResultsObjectData.swift in Sources */,
 				4A1EA5A12210933E0050F199 /* SelectedResultViewController.swift in Sources */,
