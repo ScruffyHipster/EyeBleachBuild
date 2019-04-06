@@ -202,6 +202,10 @@
                                     <constraint firstAttribute="height" constant="44" id="lzk-OF-aw1"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="optionUnselected"/>
+                                <state key="selected" image="optionSelected"/>
+                                <connections>
+                                    <action selector="didTapOptionsButton:" destination="A9P-Yx-Wwo" eventType="touchUpInside" id="hcf-yO-yD8"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Rh-Km-HkI">
                                 <rect key="frame" x="26" y="56" width="44" height="44"/>
@@ -233,6 +237,7 @@
                     <connections>
                         <outlet property="doneButton" destination="cW9-Dr-2k4" id="8KS-Zz-NHk"/>
                         <outlet property="imageView" destination="Qte-pV-ilS" id="Mca-9s-UIV"/>
+                        <outlet property="optionsButton" destination="rmb-T0-FL7" id="Eue-Eb-bds"/>
                         <outlet property="saveButton" destination="wcB-Mb-Ddu" id="4g1-mI-a2f"/>
                         <outlet property="shadowView" destination="HUA-GG-LnR" id="qsu-cY-tNI"/>
                     </connections>
@@ -264,6 +269,7 @@
         <image name="BackButton" width="45" height="44"/>
         <image name="filledHeart" width="48" height="48"/>
         <image name="heart" width="48" height="48"/>
+        <image name="optionSelected" width="39" height="12"/>
         <image name="optionUnselected" width="39" height="12"/>
     </resources>
     <inferredMetricsTieBreakers>

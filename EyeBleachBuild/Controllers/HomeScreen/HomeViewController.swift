@@ -29,6 +29,9 @@ class HomeViewController: UIViewController {
 		spinner.center.x = view.center.x
 		return spinner
 	}()
+	lazy var usableAnimations: UsableAnimations = {
+		return UsableAnimations()
+	}()
 	
 	//MARK:- Outlets
 	@IBOutlet weak var categoryLabel: UILabel! {
@@ -88,10 +91,10 @@ class HomeViewController: UIViewController {
 	@IBAction func didTapCancel() {
 		request.cancel()
 		slider.isUserInteractionEnabled = true
-		opacity(layer: activitySpinner.layer, from: 1.0, to: 0.0, duration: 0.4)
-		opacity(layer: cancelButton.layer, from: 1.0, to: 0.0, duration: 0.4)
-		scaleAndTransform(layer: showButton.layer, from: showButton.layer.position.y, to: showButton.layer.position.y - 30, duration: 0.6)
-		opacity(layer: showButton.layer, from: 0.0, to: 1.0, duration: 0.4)
+		usableAnimations.opacity(layer: activitySpinner.layer, from: 1.0, to: 0.0, duration: 0.4)
+		usableAnimations.opacity(layer: cancelButton.layer, from: 1.0, to: 0.0, duration: 0.4)
+		usableAnimations.scaleAndTransform(layer: showButton.layer, from: showButton.layer.position.y, to: showButton.layer.position.y - 30, duration: 0.6)
+		usableAnimations.opacity(layer: showButton.layer, from: 0.0, to: 1.0, duration: 0.4)
 	}
 	
 	//MARK:- Methods
@@ -143,18 +146,23 @@ class HomeViewController: UIViewController {
 	}
 	
 	func moveButtons() {
-		scaleAndTransform(layer: cancelButton.layer, from: cancelButton.layer.position.y + 30, to: cancelButton.layer.position.y, duration: 0.6)
+		if !savedButton.isHidden {
+			UIView.animate(withDuration: 0.2) {
+				self.savedButton.alpha = 0.0
+			}
+		}
+		usableAnimations.scaleAndTransform(layer: cancelButton.layer, from: cancelButton.layer.position.y + 30, to: cancelButton.layer.position.y, duration: 0.6)
 		view.addSubview(activitySpinner)
-		scaleAndTransform(layer: activitySpinner.layer, from: cancelButton.layer.position.y, to: cancelButton.layer.position.y - 50, duration: 0.6)
-		opacity(layer: showButton.layer, from: 1.0, to: 0.0, duration: 0.1)
-		opacity(layer: cancelButton.layer, from: 0.0, to: 1.0, duration: 0.4)
-		opacity(layer: activitySpinner.layer, from: 0.0, to: 1.0, duration: 0.4)
+		usableAnimations.scaleAndTransform(layer: activitySpinner.layer, from: cancelButton.layer.position.y, to: cancelButton.layer.position.y - 50, duration: 0.6)
+		usableAnimations.opacity(layer: showButton.layer, from: 1.0, to: 0.0, duration: 0.1)
+		usableAnimations.opacity(layer: cancelButton.layer, from: 0.0, to: 1.0, duration: 0.4)
+		usableAnimations.opacity(layer: activitySpinner.layer, from: 0.0, to: 1.0, duration: 0.4)
 		slider.isUserInteractionEnabled = false
 	}
 	
 	@objc func fadeText() {
 		slider.setValue(roundf(slider.value), animated: true)
-		fade(layer: self.categoryLabel.layer, from: 0.0, to: 1.0, duration: 0.2)
+		usableAnimations.fade(layer: self.categoryLabel.layer, from: 0.0, to: 1.0, duration: 0.2)
 		UIView.animate(withDuration: 0.5) {
 			switch self.slider.value {
 			case 0:
@@ -180,11 +188,13 @@ extension HomeViewController {
 		case SegueIdentifiers.ResultsCollectionViewController.identifier:
 			let vc = segue.destination as! ResultsCollectionViewController
 			vc.resultsData = resultsData
+			vc.usableAnimations = usableAnimations
 			vc.navigationItem.title = categoryLabel.text
 			vc.managedObjectContext = managedObjectContext
 		case SegueIdentifiers.SavedResultsViewController.identifier:
 			let vc = segue.destination as! ResultsCollectionViewController
 			vc.resultsData = resultsData
+			vc.usableAnimations = usableAnimations
 			vc.showingSaved = true
 			vc.navigationItem.title = "Saved Doses"
 			vc.managedObjectContext = managedObjectContext
@@ -194,78 +204,33 @@ extension HomeViewController {
 	}
 }
 
-extension HomeViewController {
-	//MARK:- Animations
-	
-	func scaleAndTransform(layer: CALayer, from: CGFloat, to: CGFloat, duration: Double) {
-		let scaleAndTransform = CABasicAnimation(keyPath: "position.y")
-		scaleAndTransform.fromValue = from
-		scaleAndTransform.toValue = to
-		scaleAndTransform.duration = duration
-		layer.add(scaleAndTransform, forKey: nil)
-		layer.position.y = to
-	}
-	
-	func opacity(layer: CALayer, from: Float, to: Float, duration: Double) {
-		let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-		opacityAnimation.fromValue = from
-		opacityAnimation.toValue = to
-		opacityAnimation.duration = duration
-		opacityAnimation.timingFunction = CAMediaTimingFunction(name: .easeIn)
-		layer.add(opacityAnimation, forKey: nil)
-		layer.opacity = to
-	}
-}
 
 //MARK:- Animations/ Delegate
 extension HomeViewController: CAAnimationDelegate {
 	
 	func startAnimation() {
-		let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+		let fadeAnimation = usableAnimations.fadeAnimation
 		fadeAnimation.delegate = self
-		fadeAnimation.fromValue = 0.0
-		fadeAnimation.toValue = 1.0
-		fadeAnimation.duration = 1.0
 		titleLabel.layer.add(fadeAnimation, forKey: nil)
 		fadeAnimation.beginTime = CACurrentMediaTime() + 0.1
 		categoryLabel.layer.add(fadeAnimation, forKey: nil)
 		fadeAnimation.beginTime = CACurrentMediaTime() + 0.1
 		slider.layer.add(fadeAnimation, forKey: nil)
-		let springPulse = CASpringAnimation(keyPath: "transform.scale")
-		springPulse.duration = 0.5
-		springPulse.initialVelocity = -10.0
-		springPulse.mass = 1
-		springPulse.damping = 10
-		springPulse.stiffness = 100
-		springPulse.duration = 1.0
-		springPulse.fromValue = 1.4
-		springPulse.toValue = 1.0
-		titleLabel.layer.add(springPulse, forKey: nil)
+		titleLabel.layer.add(usableAnimations.springPulse, forKey: nil)
 	}
 	
-	
-	func fade(layer: CALayer, from: Float, to: Float, duration: Double) {
-		let fade = CABasicAnimation(keyPath: "opacity")
-		fade.fromValue = from
-		fade.toValue = to
-		fade.duration = duration
-		layer.add(fade, forKey: nil)
-	}
 	
 	
 	func animateLabelsRight(_ labels: [CALayer]) {
 		//Can only add two labels at the moment
 		let labelGroup = CAAnimationGroup()
 		labelGroup.delegate = self
-		let flyRight = CABasicAnimation(keyPath: "position.x")
+		
+		let flyRight = usableAnimations.flyRight
 		flyRight.fromValue = -view.bounds.width / 2
 		flyRight.toValue = view.bounds.width / 2
 		
-		let fadeIn = CABasicAnimation(keyPath: "opacity")
-		fadeIn.fromValue = 0.0
-		fadeIn.toValue = 1
-		
-		labelGroup.animations = [flyRight, fadeIn]
+		labelGroup.animations = [flyRight, usableAnimations.fadeIn]
 		labelGroup.duration = 1.0
 		labelGroup.setValue("labelGroup", forKey: "name")
 		for label in labels {
@@ -287,12 +252,7 @@ extension HomeViewController: CAAnimationDelegate {
 		if name == "labelGroup" {
 			let layer = anim.value(forKey: "layer") as? CALayer
 			anim.setValue(nil, forKey: "layer")
-			let pulse = CASpringAnimation(keyPath: "transform.scale")
-			pulse.fromValue = 0.85
-			pulse.toValue = 1.00
-			pulse.damping = 7.5
-			pulse.duration = 2.0
-			layer?.add(pulse, forKey: nil)
+			layer?.add(usableAnimations.pulse, forKey: nil)
 		}
 	}
 }
