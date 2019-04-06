@@ -36,16 +36,8 @@ class HomeViewController: UIViewController {
 			categoryLabel.text = "Space"
 		}
 	}
-	@IBOutlet weak var showButton: UIButton! {
-		didSet {
-			
-		}
-	}
-	@IBOutlet weak var savedButton: UIButton! {
-		didSet {
-
-		}
-	}
+	@IBOutlet weak var showButton: UIButton!
+	@IBOutlet weak var savedButton: UIButton!
 	@IBOutlet weak var slider: UISlider! {
 		didSet {
 			slider.thumbTintColor = UsableColors.grey.colour
@@ -53,8 +45,6 @@ class HomeViewController: UIViewController {
 			slider.addTarget(self, action: #selector(fadeText), for: .touchDragInside)
 		}
 	}
-	
-	
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var cancelButton: UIButton!
 	

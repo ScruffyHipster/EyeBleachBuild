@@ -48,6 +48,7 @@ class SelectedResultViewController: UIViewController {
 	}
 	@IBOutlet weak var saveButton: UIButton!
 	@IBOutlet weak var doneButton: UIBarButtonItem!
+	@IBOutlet weak var optionsButton: UIButton!
 	
 	//MARK:- Actions
 	@IBAction func didTapSaveButton(_ sender: Any) {
