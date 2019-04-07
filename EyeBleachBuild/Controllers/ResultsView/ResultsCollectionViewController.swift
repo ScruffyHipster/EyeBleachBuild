@@ -19,12 +19,14 @@ class ResultsCollectionViewController: UIViewController {
 		return data
 	}()
 	var resultsData: ResultsObjectData?
+	var request = HTTPRequest.shared
 	var showingSaved: Bool = false
 	var usableAnimations: UsableAnimations?
 	var managedObjectContext: NSManagedObjectContext?
 	
 	//MARK:- Outlets
 	@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var infoLabel: UILabel!
 	
 	//MARK:- Methods
 	override func viewDidLoad() {
@@ -88,7 +90,11 @@ class ResultsCollectionViewController: UIViewController {
 				}
 				if (self.resultsData?.objectDataArray?.count)! <= 0 {
 					UserDefaults.standard.set(false, forKey: "savedImage")
-					self.dismiss(animated: true, completion: nil)
+					self.isEditing = false
+					self.navigationItem.rightBarButtonItem?.isEnabled = false
+					UIView.animate(withDuration: 0.5, animations: {
+						self.infoLabel.alpha = 1.0
+					})
 				}
 				self.collectionView.reloadData()
 			}
@@ -159,6 +165,13 @@ extension ResultsCollectionViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if !isEditing {
 			showingSaved ? performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewerViewController.identifier, sender: indexPath) : performSegue(withIdentifier: SegueIdentifiers.ResultViewerViewController.identifier, sender: indexPath)
+		}
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+		let lastIndex = collectionViewDataSource.resultsDataArray!.count - 1
+		if indexPath.row == lastIndex {
+			print("at end")
 		}
 	}
 }

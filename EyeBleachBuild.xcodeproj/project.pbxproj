@@ -130,11 +130,11 @@
 			isa = PBXGroup;
 			children = (
 				4A80A0C0224547B800386500 /* Gif.swift */,
-				4A1EA5A622109C080050F199 /* CoreDataModels */,
 				4A1EA59E221089BC0050F199 /* Cache.swift */,
+				4AC6193822070490002856B6 /* Enums.swift */,
+				4A1EA5A622109C080050F199 /* CoreDataModels */,
 				4AC6194622070C82002856B6 /* HttpGroup */,
 				4AC6194322070A1C002856B6 /* ResultsObject */,
-				4AC6193822070490002856B6 /* Enums.swift */,
 				4AC619352207042F002856B6 /* CollectionView */,
 			);
 			path = Models;

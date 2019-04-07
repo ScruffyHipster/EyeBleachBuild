@@ -56,17 +56,16 @@ class HomeViewController: UIViewController {
 		moveButtons()
 		switch slider.value {
 		case 0.0:
-			category = 1
+			category = nil
 		case 1.0:
 			category = 2
 		case 2.0:
-			category = 3
+			category = 14
 		case 3.0:
 			category = 4
 		default:
 			break
 		}
-		guard let category = category else {return}
 		UIApplication.shared.isNetworkActivityIndicatorVisible = true
 		let url = request.createUrl(category: category)
 		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
@@ -166,13 +165,13 @@ class HomeViewController: UIViewController {
 		UIView.animate(withDuration: 0.5) {
 			switch self.slider.value {
 			case 0:
-				self.categoryLabel.text = "Funny"
+				self.categoryLabel.text = "some cats"
 			case 1:
-				self.categoryLabel.text = "Space"
+				self.categoryLabel.text = "some cats in space"
 			case 2:
-				self.categoryLabel.text = "Hats"
+				self.categoryLabel.text = "some cats in sinks"
 			case 3:
-				self.categoryLabel.text = "Suprise"
+				self.categoryLabel.text = "some random cats"
 			default:
 				break
 			}

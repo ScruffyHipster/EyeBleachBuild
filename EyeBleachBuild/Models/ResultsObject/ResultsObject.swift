@@ -12,12 +12,16 @@ import Foundation
 typealias ResultsObjectDict = [ResultsObject]
 
 struct ResultsObject: Codable {
-	let categories: [Category]
 	let id: String
 	let url: String
+	let categories: [Category]?
 }
 
 struct Category: Codable {
 	let id: Int
 	let name: String
 }
+
+
+
+
