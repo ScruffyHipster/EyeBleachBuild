@@ -73,3 +73,8 @@ enum UsableColors {
 		}
 	}
 }
+
+enum AnimationVariables {
+	case left
+	case right
+}

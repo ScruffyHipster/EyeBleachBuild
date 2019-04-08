@@ -13,6 +13,7 @@ extension UIImageView {
 	//This extention is used to download an image from the url passed in asyncronously
 	func loadImageFrom(urlString: String, closure: @escaping ((Bool) -> ())) {
 		guard let url = URL(string: urlString) else {return}
+		//checks the image isn't in the cache. If it is, don't redownload to prevent user data issues.
 		guard let imageFromCache = imageCache.object(forKey: urlString as NSString) else {
 			URLSession.shared.downloadTask(with: url) {
 				[weak self] url, response, error in

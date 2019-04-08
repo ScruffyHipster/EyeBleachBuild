@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
 	var request = HTTPRequest.shared
 	var category: Int?
 	var managedObjectContext: NSManagedObjectContext?
+	var slideGesture: UIPanGestureRecognizer?
 	
 	lazy var resultsData: ResultsObjectData = {
 		let data = ResultsObjectData()
@@ -28,6 +29,9 @@ class HomeViewController: UIViewController {
 		spinner.center.x = view.center.x
 		return spinner
 	}()
+	lazy var usableAnimations: UsableAnimations = {
+		return UsableAnimations()
+	}()
 	
 	//MARK:- Outlets
 	@IBOutlet weak var categoryLabel: UILabel! {
@@ -35,19 +39,13 @@ class HomeViewController: UIViewController {
 			categoryLabel.text = "Space"
 		}
 	}
-	@IBOutlet weak var showButton: UIButton! {
-		didSet {
-			
-		}
-	}
-	@IBOutlet weak var savedButton: UIButton! {
-		didSet {
-
-		}
-	}
+	@IBOutlet weak var showButton: UIButton!
+	@IBOutlet weak var savedButton: UIButton!
 	@IBOutlet weak var slider: UISlider! {
 		didSet {
 			slider.thumbTintColor = UsableColors.grey.colour
+			slider.isContinuous = false
+			slider.addTarget(self, action: #selector(fadeText), for: .touchDragInside)
 		}
 	}
 	@IBOutlet weak var titleLabel: UILabel!
@@ -56,85 +54,67 @@ class HomeViewController: UIViewController {
 	//MARK:- Actions
 	@IBAction func didTapShowMeButton(_ sender: Any) {
 		moveButtons()
-//		switch slider.value {
-//		case 0.0:
-//			category = 1
-//		case 1.0:
-//			category = 2
-//		case 2.0:
-//			category = 3
-//		case 3.0:
-//			category = 4
-//		default:
-//			break
-//		}
-//
-//		guard let category = category else {return}
-//		UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//		let url = request.createUrl(category: category)
-//		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
-//			if success == false {
-//				createAlert(vc: self, title: "Error", message: "Sorry, an error occured. Cannot retrive data from server", style: .alert)
-//				DispatchQueue.main.async {
-//					UIApplication.shared.isNetworkActivityIndicatorVisible = false
-//				}
-//			} else if success == true {
-//				self.resultsData.populateData(with: data)
-//				DispatchQueue.main.async {
-//					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
-//				}
-//			}
-//		})
+		switch slider.value {
+		case 0.0:
+			category = 1
+		case 1.0:
+			category = 2
+		case 2.0:
+			category = 3
+		case 3.0:
+			category = 4
+		default:
+			break
+		}
+		guard let category = category else {return}
+		UIApplication.shared.isNetworkActivityIndicatorVisible = true
+		let url = request.createUrl(category: category)
+		request.makeRequest(url: url, for: ResultsObjectDict.self, closure: { (success, data) in
+			if success == false {
+				createAlert(vc: self, title: "Error", message: "Sorry, an error occured. Cannot retrive data from server", style: .alert)
+				DispatchQueue.main.async {
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
+				}
+			} else if success == true {
+				self.resultsData.populateData(with: data)
+				DispatchQueue.main.async {
+					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
+				}
+			}
+		})
 	}
 	
 	@IBAction func didTapSavedButton(_ sender: Any) {
 		performSegue(withIdentifier: SegueIdentifiers.SavedResultsViewController.identifier, sender: nil)
 	}
 	
-	@IBAction func categorySldierChanged(_ sender: UISlider) {
-		slider.value = roundf(slider.value)
-		switch sender.value {
-		case 0.0:
-			categoryLabel.text = "Hats"
-		case 1.0:
-			categoryLabel.text = "Space"
-		case 2.0:
-			categoryLabel.text = "Funny"
-		case 3.0:
-			categoryLabel.text = "Suprise!"
-		default:
-			break
-		}
-	}
-	
 	@IBAction func didTapCancel() {
 		request.cancel()
 		slider.isUserInteractionEnabled = true
-		opacity(layer: activitySpinner.layer, from: 1.0, to: 0.0, duration: 0.4)
-		opacity(layer: cancelButton.layer, from: 1.0, to: 0.0, duration: 0.4)
-		scaleAndTransform(layer: showButton.layer, from: showButton.layer.position.y, to: showButton.layer.position.y - 30, duration: 0.6)
-		opacity(layer: showButton.layer, from: 0.0, to: 1.0, duration: 0.4)
+		usableAnimations.opacity(layer: activitySpinner.layer, from: 1.0, to: 0.0, duration: 0.4)
+		usableAnimations.opacity(layer: cancelButton.layer, from: 1.0, to: 0.0, duration: 0.4)
+		usableAnimations.scaleAndTransform(layer: showButton.layer, from: showButton.layer.position.y, to: showButton.layer.position.y - 30, duration: 0.6)
+		usableAnimations.opacity(layer: showButton.layer, from: 0.0, to: 1.0, duration: 0.4)
 	}
 	
 	//MARK:- Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setUpView()
-		
 	}
 	
 	
-//	override func viewWillAppear(_ animated: Bool) {
-//		super.viewWillAppear(animated)
-//		navigationController?.navigationBar.isHidden = true
-//		slider.isUserInteractionEnabled = true
-//		checkForSavedImages()
-//		self.showButton.alpha = 1.0
-//		self.showButton.transform = .identity
-//		self.savedButton.alpha = 1.0
-//		self.cancelButton.alpha = 0.0
-//		self.acitivtySpinner.removeFromSuperview()
-//	}
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.navigationBar.isHidden = true
+		slider.isUserInteractionEnabled = true
+		checkForSavedImages()
+		self.showButton.alpha = 1.0
+		self.showButton.transform = .identity
+		self.savedButton.alpha = 1.0
+		self.cancelButton.alpha = 0.0
+		self.activitySpinner.removeFromSuperview()
+	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		navigationController?.navigationBar.isHidden = false
@@ -166,14 +146,37 @@ class HomeViewController: UIViewController {
 	}
 	
 	func moveButtons() {
-		scaleAndTransform(layer: showButton.layer, from: showButton.layer.position.y, to: showButton.layer.position.y + 30, duration: 0.4)
-		scaleAndTransform(layer: cancelButton.layer, from: cancelButton.layer.position.y + 30, to: cancelButton.layer.position.y, duration: 0.6)
+		if !savedButton.isHidden {
+			UIView.animate(withDuration: 0.2) {
+				self.savedButton.alpha = 0.0
+			}
+		}
+		usableAnimations.scaleAndTransform(layer: cancelButton.layer, from: cancelButton.layer.position.y + 30, to: cancelButton.layer.position.y, duration: 0.6)
 		view.addSubview(activitySpinner)
-		scaleAndTransform(layer: activitySpinner.layer, from: cancelButton.layer.position.y, to: cancelButton.layer.position.y - 50, duration: 0.6)
-		opacity(layer: showButton.layer, from: 1.0, to: 0.0, duration: 0.3)
-		opacity(layer: cancelButton.layer, from: 0.0, to: 1.0, duration: 0.4)
-		opacity(layer: activitySpinner.layer, from: 0.0, to: 1.0, duration: 0.4)
+		usableAnimations.scaleAndTransform(layer: activitySpinner.layer, from: cancelButton.layer.position.y, to: cancelButton.layer.position.y - 50, duration: 0.6)
+		usableAnimations.opacity(layer: showButton.layer, from: 1.0, to: 0.0, duration: 0.1)
+		usableAnimations.opacity(layer: cancelButton.layer, from: 0.0, to: 1.0, duration: 0.4)
+		usableAnimations.opacity(layer: activitySpinner.layer, from: 0.0, to: 1.0, duration: 0.4)
 		slider.isUserInteractionEnabled = false
+	}
+	
+	@objc func fadeText() {
+		slider.setValue(roundf(slider.value), animated: true)
+		usableAnimations.fade(layer: self.categoryLabel.layer, from: 0.0, to: 1.0, duration: 0.2)
+		UIView.animate(withDuration: 0.5) {
+			switch self.slider.value {
+			case 0:
+				self.categoryLabel.text = "Funny"
+			case 1:
+				self.categoryLabel.text = "Space"
+			case 2:
+				self.categoryLabel.text = "Hats"
+			case 3:
+				self.categoryLabel.text = "Suprise"
+			default:
+				break
+			}
+		}
 	}
 	
 }
@@ -185,11 +188,13 @@ extension HomeViewController {
 		case SegueIdentifiers.ResultsCollectionViewController.identifier:
 			let vc = segue.destination as! ResultsCollectionViewController
 			vc.resultsData = resultsData
+			vc.usableAnimations = usableAnimations
 			vc.navigationItem.title = categoryLabel.text
 			vc.managedObjectContext = managedObjectContext
 		case SegueIdentifiers.SavedResultsViewController.identifier:
 			let vc = segue.destination as! ResultsCollectionViewController
 			vc.resultsData = resultsData
+			vc.usableAnimations = usableAnimations
 			vc.showingSaved = true
 			vc.navigationItem.title = "Saved Doses"
 			vc.managedObjectContext = managedObjectContext
@@ -199,53 +204,19 @@ extension HomeViewController {
 	}
 }
 
-extension HomeViewController {
-	//MARK:- Animations
-	
-	func scaleAndTransform(layer: CALayer, from: CGFloat, to: CGFloat, duration: Double) {
-		let scaleAndTransform = CABasicAnimation(keyPath: "position.y")
-		scaleAndTransform.fromValue = from
-		scaleAndTransform.toValue = to
-		scaleAndTransform.duration = duration
-		layer.add(scaleAndTransform, forKey: nil)
-		layer.position.y = to
-	}
-	
-	func opacity(layer: CALayer, from: Float, to: Float, duration: Double) {
-		let opacityAnimation = CABasicAnimation(keyPath: "opacity")
-		opacityAnimation.fromValue = from
-		opacityAnimation.toValue = to
-		opacityAnimation.duration = duration
-		opacityAnimation.timingFunction = CAMediaTimingFunction(name: .easeIn)
-		layer.add(opacityAnimation, forKey: nil)
-		layer.opacity = to
-	}
-}
 
 //MARK:- Animations/ Delegate
 extension HomeViewController: CAAnimationDelegate {
 	
 	func startAnimation() {
-		let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+		let fadeAnimation = usableAnimations.fadeAnimation
 		fadeAnimation.delegate = self
-		fadeAnimation.fromValue = 0.0
-		fadeAnimation.toValue = 1.0
-		fadeAnimation.duration = 1.0
 		titleLabel.layer.add(fadeAnimation, forKey: nil)
 		fadeAnimation.beginTime = CACurrentMediaTime() + 0.1
 		categoryLabel.layer.add(fadeAnimation, forKey: nil)
 		fadeAnimation.beginTime = CACurrentMediaTime() + 0.1
 		slider.layer.add(fadeAnimation, forKey: nil)
-		let springPulse = CASpringAnimation(keyPath: "transform.scale")
-		springPulse.duration = 0.5
-		springPulse.initialVelocity = -10.0
-		springPulse.mass = 1
-		springPulse.damping = 10
-		springPulse.stiffness = 100
-		springPulse.duration = 1.0
-		springPulse.fromValue = 1.4
-		springPulse.toValue = 1.0
-		titleLabel.layer.add(springPulse, forKey: nil)
+		titleLabel.layer.add(usableAnimations.springPulse, forKey: nil)
 	}
 	
 	
@@ -254,15 +225,12 @@ extension HomeViewController: CAAnimationDelegate {
 		//Can only add two labels at the moment
 		let labelGroup = CAAnimationGroup()
 		labelGroup.delegate = self
-		let flyRight = CABasicAnimation(keyPath: "position.x")
+		
+		let flyRight = usableAnimations.flyRight
 		flyRight.fromValue = -view.bounds.width / 2
 		flyRight.toValue = view.bounds.width / 2
 		
-		let fadeIn = CABasicAnimation(keyPath: "opacity")
-		fadeIn.fromValue = 0.0
-		fadeIn.toValue = 1
-		
-		labelGroup.animations = [flyRight, fadeIn]
+		labelGroup.animations = [flyRight, usableAnimations.fadeIn]
 		labelGroup.duration = 1.0
 		labelGroup.setValue("labelGroup", forKey: "name")
 		for label in labels {
@@ -278,26 +246,13 @@ extension HomeViewController: CAAnimationDelegate {
 		}
 	}
 	
-	//Delegate methods
+	//MARK:- Animation Delegate methods
 	func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
 		guard let name = anim.value(forKey: "name") as? String else {return}
 		if name == "labelGroup" {
 			let layer = anim.value(forKey: "layer") as? CALayer
 			anim.setValue(nil, forKey: "layer")
-			let pulse = CASpringAnimation(keyPath: "transform.scale")
-			pulse.fromValue = 0.85
-			pulse.toValue = 1.00
-			pulse.damping = 7.5
-			pulse.duration = 2.0
-			layer?.add(pulse, forKey: nil)
-		}
-		if name == "moveFadeGroup" {
-			UIView.animate(withDuration: 1) {
-//				self.showButton.layer.opacity = 0.0
-//				self.activitySpinner.alpha = 1.0
-//				self.cancelButton.alpha = 1.0
-//				self.view.addSubview(self.activitySpinner)
-			}
+			layer?.add(usableAnimations.pulse, forKey: nil)
 		}
 	}
 }

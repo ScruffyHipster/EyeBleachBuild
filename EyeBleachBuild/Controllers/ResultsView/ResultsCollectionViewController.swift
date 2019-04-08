@@ -20,6 +20,7 @@ class ResultsCollectionViewController: UIViewController {
 	}()
 	var resultsData: ResultsObjectData?
 	var showingSaved: Bool = false
+	var usableAnimations: UsableAnimations?
 	var managedObjectContext: NSManagedObjectContext?
 	
 	//MARK:- Outlets
@@ -28,6 +29,7 @@ class ResultsCollectionViewController: UIViewController {
 	//MARK:- Methods
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		guard usableAnimations != nil else {return}
 		guard resultsData != nil else {
 			print("error on loading data")
 			return
@@ -36,6 +38,7 @@ class ResultsCollectionViewController: UIViewController {
 		setupNavigationBarView()
 		setUpForSaved(showingSaved)
 	}
+	
 	
 	func setupNavigationBarView() {
 		guard let navBar = navigationController?.navigationBar else {return}
@@ -128,6 +131,7 @@ class ResultsCollectionViewController: UIViewController {
 			let indexPath = sender as! IndexPath
 			let result = data[indexPath.row]
 			vc.result = result as? ResultsObject
+			vc.usableAnimations = usableAnimations
 			vc.delegate = self
 		case SegueIdentifiers.SavedResultsViewerViewController.identifier:
 			print("showing saved cats")

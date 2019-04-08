@@ -20,8 +20,11 @@ class SelectedResultViewController: UIViewController {
 	var savedResult: SavedResult?
 	let request = HTTPRequest.shared
 	var showSaved: Bool = false
-	weak var delegate: SelectedResultsViewControllerDelegate?
+	var showOptions: Bool = false
 	var shouldBeSaved: Bool = false
+	var imageToShare: UIImage?
+	var usableAnimations: UsableAnimations?
+	weak var delegate: SelectedResultsViewControllerDelegate?
 	lazy var activityIndicator: UIActivityIndicatorView = {
 		var av = UIActivityIndicatorView()
 		av.style = .gray
@@ -48,6 +51,7 @@ class SelectedResultViewController: UIViewController {
 	}
 	@IBOutlet weak var saveButton: UIButton!
 	@IBOutlet weak var doneButton: UIBarButtonItem!
+	@IBOutlet weak var optionsButton: UIButton!
 	
 	//MARK:- Actions
 	@IBAction func didTapSaveButton(_ sender: Any) {
@@ -62,6 +66,21 @@ class SelectedResultViewController: UIViewController {
 		shouldBeSaved ? delegate?.didTapSaveButton(item: result!.url, sender: self) : dismiss(animated: true, completion: {
 			self.shouldBeSaved ? print("saved item") : print("nothing saved")
 		})
+	}
+	
+	@IBAction func didTapOptionsButton(_ sender: UIButton) {
+		options()
+		guard let url = result?.url else {return}
+		let shareController = UIActivityViewController(activityItems: ["Check out this cool cat", url], applicationActivities: [])
+		shareController.completionWithItemsHandler = {(activity: UIActivity.ActivityType?, completed: Bool, returnedItem: [Any]?, error: Error?) in
+			if completed {
+				print("done")
+			} else {
+				print("Not done")
+				self.options()
+			}
+		}
+		present(shareController, animated: true)
 	}
 
     override func viewDidLoad() {
@@ -127,5 +146,11 @@ class SelectedResultViewController: UIViewController {
 	func save() {
 		shouldBeSaved = !shouldBeSaved
 		saveButton.isSelected = shouldBeSaved
+		saveButton.layer.add(usableAnimations!.springPulse, forKey: nil)
+	}
+	
+	func options() {
+		showOptions = !showOptions
+		optionsButton.isSelected = showOptions
 	}
 }

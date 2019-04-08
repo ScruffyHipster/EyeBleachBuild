@@ -74,7 +74,7 @@ class ResultsCollectionViewCell: UICollectionViewCell {
 				if success {
 					DispatchQueue.main.async {
 						self.activityIndicator.stopAnimating()
-self.activityIndicator.removeFromSuperview()
+						self.activityIndicator.removeFromSuperview()
 					}
 				}
 			})
