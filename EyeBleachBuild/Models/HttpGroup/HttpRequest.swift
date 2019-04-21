@@ -35,11 +35,13 @@ class HTTPRequest: NSObject {
 	func createUrl(category: Int?) -> URLRequest {
 		var url: URL?
 		if let category = category {
-			url = URL(string: "https://api.thecatapi.com/v1/images/search?category_ids=\(category)&limit=20&page=\(Int.random(in: 1...10))")
-		} else if category == 4 {
-			url = URL(string: "https://api.thecatapi.com/v1/images/search?category_ids=\(Int.random(in: 1...7))&limit=20&page=\(Int.random(in: 1...10))")
-		} else {
-			url = URL(string: "https://api.thecatapi.com/v1/images/search?limit=20&page=\(Int.random(in: 1...100))&order=desc")
+			if category != 4 {
+				url = URL(string: "https://api.thecatapi.com/v1/images/search?category_ids=\(category)&limit=20&page=\(Int.random(in: 1...10))")
+			} else if category == 4 {
+				url = URL(string: "https://api.thecatapi.com/v1/images/search?category_ids=\(Int.random(in: 1...7))&limit=20&page=\(Int.random(in: 1...10))")
+			} else {
+				url = URL(string: "https://api.thecatapi.com/v1/images/search?limit=20&page=\(Int.random(in: 1...100))&order=desc")
+			}
 		}
 		var request = URLRequest(url: url!)
 		request.httpMethod = "GET"

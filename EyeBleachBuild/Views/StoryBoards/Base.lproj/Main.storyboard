@@ -123,6 +123,7 @@
                         <outlet property="categoryLabel" destination="c7y-t6-Thk" id="x0K-b1-VNU"/>
                         <outlet property="savedButton" destination="OAb-X4-z3O" id="Q50-7K-cam"/>
                         <outlet property="showButton" destination="NNR-R4-mya" id="UpE-zz-gFG"/>
+                        <outlet property="showMeLabel" destination="RJ4-Ia-iHn" id="whm-Qz-6oZ"/>
                         <outlet property="slider" destination="NJF-rm-QsK" id="sMs-hQ-hhX"/>
                         <outlet property="titleLabel" destination="19b-zJ-oDm" id="f11-Ya-dPa"/>
                         <segue destination="jii-SV-vWv" kind="show" identifier="ResultsCollectionViewController" id="8nQ-DC-CR1"/>

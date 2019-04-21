@@ -50,6 +50,7 @@ class HomeViewController: UIViewController {
 	}
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var cancelButton: UIButton!
+	@IBOutlet weak var showMeLabel: UILabel!
 	
 	//MARK:- Actions
 	@IBAction func didTapShowMeButton(_ sender: Any) {
@@ -77,6 +78,7 @@ class HomeViewController: UIViewController {
 			} else if success == true {
 				self.resultsData.populateData(with: data)
 				DispatchQueue.main.async {
+					UIApplication.shared.isNetworkActivityIndicatorVisible = false
 					self.performSegue(withIdentifier: SegueIdentifiers.ResultsCollectionViewController.identifier, sender: nil)
 				}
 			}
