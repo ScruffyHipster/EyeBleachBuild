@@ -12,7 +12,7 @@ import CoreData
 class HomeViewController: UIViewController {
 	
 	//MARK:- Properties
-	var request = HTTPRequest.shared
+	lazy var request = HTTPRequest.shared
 	var category: Int?
 	var managedObjectContext: NSManagedObjectContext?
 	var slideGesture: UIPanGestureRecognizer?
